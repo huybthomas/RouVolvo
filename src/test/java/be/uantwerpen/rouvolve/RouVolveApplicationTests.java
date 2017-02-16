@@ -9,10 +9,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = RouVolvoApplication.class)
+@SpringApplicationConfiguration(classes = RouVolveApplication.class)
 @ActiveProfiles(profiles = {"dev"}, resolver = SystemPropertyActiveProfileResolver.class)
 @WebAppConfiguration
-public class RouVolvoApplicationTests
+public class RouVolveApplicationTests
 {
 	@Test
 	public void contextLoads()
