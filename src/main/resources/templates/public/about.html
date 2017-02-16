@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="layout :: head (pageTitle=#{about.title})"></head>
+<body>
+<!-- Import navigation bar -->
+<div th:replace="layout :: navbar"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12" style="display: table; text-align: center">
+            <div class="about-header">
+                <img alt="Logo" th:src="@{/images/RouVolvoLogo.png}" style="vertical-align: middle; height: 100px"/>
+                <span style="padding-left: 8px">
+                    <span class="h1" th:text="#{application.title}"></span>
+                    <span class="h5" th:text="'v.' +  #{application.version.main} + '.' + #{application.version.minor}"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <hr/>
+
+    <h2>About</h2>
+    <p th:text="'Proof of concept application for the Volvo Trucks Hackathon Challenge.'">Info</p>
+    <p th:text="'Copyright &copy; 2017 UAntwerpen and its licensors. All Rights Reserved.'">Copyright</p>
+    <h3>Developed by:</h3>
+    <div th:each="developer : ${developers}">
+        <p th:text="${developer}"></p>
+    </div>
+    <div style="padding-bottom: 75px"></div>
+</div>
+
+<!-- Import footer -->
+<div th:replace="layout :: footer"></div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<!-- Uniform header layout -->
+<head th:fragment="head (pageTitle)">
+    <link rel="shortcut icon" th:href="@{/favicon.ico}" type="image/x-icon"/>
+    <title th:text="${pageTitle} + ' - ' + #{application.title}"></title>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}" type="text/javascript"></script>
+
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.6/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+
+    <script src="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.6/js/bootstrap.min.js"
+            th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}" type="text/javascript"></script>
+
+    <link rel="stylesheet" media="only screen and (min-width: 768px)" type="text/css" th:href="@{/css/desktop.css}"/>
+    <link rel="stylesheet" media="only screen and (min-width: 500px) and (max-width: 768px)" type="text/css" th:href="@{/css/tablet.css}"/>
+    <link rel="stylesheet" media="only screen and (max-width: 500px)" type="text/css" th:href="@{/css/mobile.css}"/>
+</head>
+
+<!-- Uniform navigationbar layout -->
+<div th:fragment="navbar">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Application logo and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <div class="brand-centered">
+                    <a class="navbar-brand" href="#"><img class="brand-image" alt="RouVolvo" th:src="@{/images/RouVolvoLogo.png}"/><span style="padding-left: 5px" th:text="#{application.package}">RouVolvo</span></a>
+                </div>
+
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <!-- Collect the navigation links, forms and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbar-collapse-1">
+                <!-- Left buttons -->
+                <ul class="nav navbar-nav navbar-left">
+                    <li sec:authorize="!hasRole('logon')"><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span><span> </span><span th:text="#{navbar.login}">Login</span></a></li>
+                    <li sec:authorize="hasRole('logon')"><a th:href="@{/}"><span class="glyphicon glyphicon-home"></span><span> </span><span th:text="#{navbar.home}">Home</span></a></li>
+                </ul>
+                <!-- Right buttons -->
+                <ul class="nav navbar-nav navbar-right" style="padding-right: 15px">
+                    <li sec:authorize="hasRole('logon')"><a th:href="@{/settings}"><span class="glyphicon glyphicon-cog"></span><span> </span><span th:text="#{navbar.settings}">Settings</span></a></li>
+                    <li sec:authorize="!hasRole('logon')"><a th:href="@{/about}"><span class="glyphicon glyphicon-info-sign"></span><span> </span><span th:text="#{navbar.about}">About</span></a></li>
+                    <li sec:authorize="hasRole('logon')" class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span><span> </span><span th:text="${#authentication.name}">Username</span><span> </span><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <!--<li class="dropdown-header"><span>FULL NAME</span></li>-->
+                            <li><a href="#"><span class="glyphicon glyphicon-dashboard"></span><span> </span><span th:text="#{navbar.profile}">Profile</span></a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a th:href="@{/about}"><span class="glyphicon glyphicon-info-sign"></span><span> </span><span th:text="#{navbar.about}">About</span></a></li>
+                            <li role="seperator" class="divider"></li>
+                            <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span><span> </span><span th:text="#{navbar.logout}">Logout</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <nav class="navbar navbar-default navbar-fixed-bottom mobile-element">
+        <div class="container-fluid">
+            <!-- Application logo and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <!--    <li><a th:href="@{/}"><span class="glyphicon glyphicon-home"></span></a></li>
+                    <li><a th:href="@{/}"><span class="glyphicon glyphicon-tasks"></span></a></li>
+                    <li><a th:href="@{/settings}"><span class="glyphicon glyphicon-cog"></span></a></li>-->
+            </div>
+        </div>
+    </nav>
+</div>
+
+<!-- Uniform footer layout -->
+<div th:fragment="footer">
+    <footer class="footer navbar-fixed-bottom non-mobile-element" style="padding:2em; margin-top:1em; position:absolute; bottom:0; height:20px">
+        <div class="small text-center">
+            <p class="text-muted" th:text="'&copy;2017 UAntwerpen - ' + #{footer.currently} + ' v.' + #{application.version.main} + '.' + #{application.version.minor}">Footer text</p>
+        </div>
+    </footer>
+</div>
+</html>

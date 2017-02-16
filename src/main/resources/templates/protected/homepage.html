@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="layout :: head (pageTitle=#{homepage.title})"></head>
+<body>
+<!-- Import navigation bar -->
+<div th:replace="layout :: navbar"></div>
+
+<div class="container-fluid">
+    <div class="front-content">
+        <h2 th:text="#{application.title}">Application Title</h2>
+    </div>
+</div>
+
+<!-- Import footer -->
+<div th:replace="layout :: footer"></div>
+</body>
+</html>
