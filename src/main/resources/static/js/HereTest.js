@@ -36,9 +36,6 @@ function processForm(e) {
     var to = document.getElementById('To');
     var toString = {searchText: to.value};
 
-    // Get an instance of the geocoding service:
-    var geocoder = platform.getGeocodingService();
-
     map.removeObjects(markers);
     markers = [];
 
@@ -59,6 +56,16 @@ function processForm(e) {
 var positions = [];
 var markers = [];
 
+var platform = new H.service.Platform({
+    app_id: 'iCn0Xpw2mwICvvbA3tqu',
+    app_code: 'Rliy9NrYV2-WjR52DSbtVA',
+    useCIT: true,
+    useHTTPS: true
+});
+
+// Get an instance of the geocoding service:
+var geocoder = platform.getGeocodingService();
+
 // Define a callback function to process the geocoding response:
 var onResult = function(result) {
     var locations = result.Response.View[0].Result,
@@ -77,20 +84,21 @@ var onResult = function(result) {
         markers.push(marker);
     }
 
-    if(positions.length == 2){
-        calculateRouteFromAtoB(platform);
+    if(positions.length%2 == 0){
+        var i = positions.length-1;
+        calculateRouteFromAtoB(platform, i);
     }
 };
 
-function calculateRouteFromAtoB (platform) {
+function calculateRouteFromAtoB (platform, i) {
     var router = platform.getRoutingService(),
         routeRequestParams = {
             mode: 'fastest;truck',
             representation: 'display',
             routeattributes : 'waypoints,summary,shape,legs',
             maneuverattributes: 'direction,action',
-            waypoint0: positions[0].lat.toString() + ',' + positions[0].lng.toString(), // Brandenburg Gate
-            waypoint1: positions[1].lat.toString() + ',' + positions[1].lng.toString()  // Friedrichstraße Railway Station
+            waypoint0: positions[i-1].lat.toString() + ',' + positions[i-1].lng.toString(), // Brandenburg Gate
+            waypoint1: positions[i].lat.toString() + ',' + positions[i].lng.toString()  // Friedrichstraße Railway Station
         };
 
 
@@ -129,13 +137,6 @@ if (form.attachEvent) {
 function onError(error) {
     alert('Ooops!');
 }
-
-var platform = new H.service.Platform({
-    app_id: 'iCn0Xpw2mwICvvbA3tqu',
-    app_code: 'Rliy9NrYV2-WjR52DSbtVA',
-    useCIT: true,
-    useHTTPS: true
-});
 
 var defaultLayers = platform.createDefaultLayers();
 
@@ -332,6 +333,8 @@ Number.prototype.toMMSS = function () {
     return Math.floor(this / 60) + ' minutes ' + (this % 60) + ' seconds.';
 }
 
+var status = 0;
+
 $(document).keypress(function(e){
     var checkEnter=(e.which==13 ? 1 : 0);
 
@@ -341,17 +344,21 @@ $(document).keypress(function(e){
 });
 
 function start(){
-    geocoder.geocode(fromString, onResult, function(e) {
+    var Zee = {searchText: 'Zeebrugge, Belgie'};
+    geocoder.geocode(Zee, onResult, function(e) {
         alert(e);
     });
-    geocoder.geocode(toString, onResult, function(e) {
+    var Libra = {searchText: 'Libramont, Belgie'};
+    geocoder.geocode(Libra, onResult, function(e) {
         alert(e);
     });
 
-    geocoder.geocode(fromString, onResult, function(e) {
+    var Duin = {searchText: 'Duinkerke, Frankrijk'};
+    geocoder.geocode(Duin, onResult, function(e) {
         alert(e);
     });
-    geocoder.geocode(toString, onResult, function(e) {
+    var Lens = {searchText: 'Lens, Frankrijk'};
+    geocoder.geocode(Lens, onResult, function(e) {
         alert(e);
     });
 }
