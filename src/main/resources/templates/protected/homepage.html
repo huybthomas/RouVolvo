@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-<head th:replace="layout :: head (pageTitle=#{homepage.title})"></head>
+<head th:replace="layout :: head (pageTitle=#{homepage.title})">
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-core.js"
+            type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-service.js"
+            type="text/javascript" charset="utf-8"></script>
+</head>
+
 <body>
 <!-- Import navigation bar -->
 <div th:replace="layout :: navbar"></div>
+
 
 <div class="container-fluid">
     <div class="front-content">
         <h2 th:text="#{application.title}">Application Title</h2>
     </div>
 </div>
+
+<div style="width: 640px; height: 480px" id="mapContainer"></div>
+
+<script th:src="'/js/HereTest.js'" type="text/javascript" charset="utf-8"></script>
 
 <!-- Import footer -->
 <div th:replace="layout :: footer"></div>
