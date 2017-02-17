@@ -20,7 +20,7 @@ public class HomeController extends GlobalModelController
     DevelopersList developersList;
 
     @RequestMapping(value = {"/"})
-    @PreAuthorize("hasRole('logon')")
+    //@PreAuthorize("hasRole('logon')")
     public String showHomepage(ModelMap model)
     {
         return "protected/homepage";
