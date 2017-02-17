@@ -130,11 +130,6 @@ function onError(error) {
     alert('Ooops!');
 }
 
-function moveMapToBerlin(map){
-    map.setCenter({lat:52.5159, lng:13.3777});
-    map.setZoom(14);
-}
-
 var platform = new H.service.Platform({
     app_id: 'iCn0Xpw2mwICvvbA3tqu',
     app_code: 'Rliy9NrYV2-WjR52DSbtVA',
@@ -148,6 +143,10 @@ var defaultLayers = platform.createDefaultLayers();
 var map = new H.Map(document.getElementById('map'),
     defaultLayers.normal.map);
 
+window.addEventListener('resize', function () {
+    map.getViewPort().resize();
+});
+
 //Step 3: make the map interactive
 // MapEvents enables the event system
 // Behavior implements default interactions for pan/zoom (also on mobile touch environments)
@@ -156,8 +155,6 @@ var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
 // Create the default UI components
 var ui = H.ui.UI.createDefault(map, defaultLayers);
 
-// Now use the map as required...
-moveMapToBerlin(map);
 
 // Hold a reference to any infobubble opened
 var bubble;
@@ -339,13 +336,24 @@ $(document).keypress(function(e){
     var checkEnter=(e.which==13 ? 1 : 0);
 
     if (checkEnter){
-        if(markers.length != 0)
-            map.removeObjects(markers);
+
     }
 });
 
 function start(){
+    geocoder.geocode(fromString, onResult, function(e) {
+        alert(e);
+    });
+    geocoder.geocode(toString, onResult, function(e) {
+        alert(e);
+    });
 
+    geocoder.geocode(fromString, onResult, function(e) {
+        alert(e);
+    });
+    geocoder.geocode(toString, onResult, function(e) {
+        alert(e);
+    });
 }
 
 start();
