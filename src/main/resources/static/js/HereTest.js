@@ -67,38 +67,19 @@ var platform = new H.service.Platform({
 var geocoder = platform.getGeocodingService();
 
 // Define a callback function to process the geocoding response:
-var onResult = function(result) {
-    var locations = result.Response.View[0].Result,
-        position,
-        marker;
-    // Add a marker for each location found
 
-    for (i = 0;  i < locations.length; i++) {
-        position = {
-            lat: locations[i].Location.DisplayPosition.Latitude,
-            lng: locations[i].Location.DisplayPosition.Longitude
-        };
-        positions.push(position);
-        marker = new H.map.Marker(position);
-        map.addObject(marker);
-        markers.push(marker);
-    }
-
-    if(positions.length%2 == 0){
-        var i = positions.length-1;
-        calculateRouteFromAtoB(platform, i);
-    }
-};
-
-function calculateRouteFromAtoB (platform, i) {
+function calculateRoute01 (platform) {
     var router = platform.getRoutingService(),
         routeRequestParams = {
             mode: 'fastest;truck',
             representation: 'display',
             routeattributes : 'waypoints,summary,shape,legs',
             maneuverattributes: 'direction,action',
-            waypoint0: positions[i-1].lat.toString() + ',' + positions[i-1].lng.toString(), // Brandenburg Gate
-            waypoint1: positions[i].lat.toString() + ',' + positions[i].lng.toString()  // Friedrichstraße Railway Station
+            waypoint0: positions[0].lat.toString() + ',' + positions[0].lng.toString(), // Brandenburg Gate
+            waypoint1: positions[1].lat.toString() + ',' + positions[1].lng.toString(), // Friedrichstraße Railway Station
+            waypoint2: positions[6].lat.toString() + ',' + positions[6].lng.toString(),
+            waypoint3: positions[5].lat.toString() + ',' + positions[5].lng.toString(),
+            waypoint4: positions[0].lat.toString() + ',' + positions[0].lng.toString()
         };
 
 
@@ -109,7 +90,27 @@ function calculateRouteFromAtoB (platform, i) {
     );
 }
 
-function calculateRouteFromAtoBThroughC (platform, waypoint) {
+function calculateRoute02 (platform) {
+    var router = platform.getRoutingService(),
+        routeRequestParams = {
+            mode: 'fastest;truck',
+            representation: 'display',
+            routeattributes : 'waypoints,summary,shape,legs',
+            maneuverattributes: 'direction,action',
+            waypoint0: positions[2].lat.toString() + ',' + positions[2].lng.toString(), // Brandenburg Gate
+            waypoint1: positions[3].lat.toString() + ',' + positions[3].lng.toString(), // Friedrichstraße Railway Station
+            waypoint2: positions[2].lat.toString() + ',' + positions[2].lng.toString()
+        };
+
+
+    router.calculateRoute(
+        routeRequestParams,
+        onSuccess,
+        onError
+    );
+}
+
+function calculateRoute10 (platform) {
     var router = platform.getRoutingService(),
         routeRequestParams = {
             mode: 'fastest;truck',
@@ -117,15 +118,142 @@ function calculateRouteFromAtoBThroughC (platform, waypoint) {
             routeattributes : 'waypoints,summary,shape,legs',
             maneuverattributes: 'direction,action',
             waypoint0: positions[0].lat.toString() + ',' + positions[0].lng.toString(), // Brandenburg Gate
-            waypoint1: waypoint[0].toString()+','+waypoint[1].toString(),
-            waypoint2: positions[1].lat.toString() + ',' + positions[1].lng.toString()  // Friedrichstraße Railway Station
+            waypoint1: positions[4].lat.toString() + ',' + positions[4].lng.toString(),
+            waypoint2: positions[1].lat.toString() + ',' + positions[1].lng.toString(), // Friedrichstraße Railway Station
+            waypoint3: positions[6].lat.toString() + ',' + positions[6].lng.toString(),
+            waypoint4: positions[5].lat.toString() + ',' + positions[5].lng.toString(),
+            waypoint5: positions[0].lat.toString() + ',' + positions[0].lng.toString()
 
         };
 
 
     router.calculateRoute(
         routeRequestParams,
-        onSuccessAlt,
+        onSuccessAlt10,
+        onError
+    );
+}
+
+function calculateRoute11 (platform) {
+    var router = platform.getRoutingService(),
+        routeRequestParams = {
+            mode: 'fastest;truck',
+            representation: 'display',
+            routeattributes : 'waypoints,summary,shape,legs',
+            maneuverattributes: 'direction,action',
+            waypoint0: positions[2].lat.toString() + ',' + positions[2].lng.toString(), // Brandenburg Gate
+            waypoint1: positions[3].lat.toString() + ',' + positions[3].lng.toString(), // Friedrichstraße Railway Station
+            waypoint2: positions[2].lat.toString() + ',' + positions[2].lng.toString()
+        };
+
+
+    router.calculateRoute(
+        routeRequestParams,
+        onSuccessAlt11,
+        onError
+    );
+}
+
+function calculateRoute20 (platform) {
+    var router = platform.getRoutingService(),
+        routeRequestParams = {
+            mode: 'fastest;truck',
+            representation: 'display',
+            routeattributes : 'waypoints,summary,shape,legs',
+            maneuverattributes: 'direction,action',
+            waypoint0: positions[0].lat.toString() + ',' + positions[0].lng.toString(), // Brandenburg Gate
+            waypoint1: positions[4].lat.toString() + ',' + positions[4].lng.toString(), // Friedrichstraße Railway Station
+            waypoint2: positions[1].lat.toString() + ',' + positions[1].lng.toString(),
+            waypoint3: positions[0].lat.toString() + ',' + positions[0].lng.toString()
+        };
+
+
+    router.calculateRoute(
+        routeRequestParams,
+        onSuccessAlt20,
+        onError
+    );
+}
+
+function calculateRoute21 (platform) {
+    var router = platform.getRoutingService(),
+        routeRequestParams = {
+            mode: 'fastest;truck',
+            representation: 'display',
+            routeattributes : 'waypoints,summary,shape,legs',
+            maneuverattributes: 'direction,action',
+            waypoint0: positions[2].lat.toString() + ',' + positions[2].lng.toString(), // Brandenburg Gate
+            waypoint1: positions[3].lat.toString() + ',' + positions[3].lng.toString(), // Friedrichstraße Railway Station
+            waypoint2: positions[6].lat.toString() + ',' + positions[6].lng.toString(),
+            waypoint3: positions[5].lat.toString() + ',' + positions[5].lng.toString(),
+            waypoint4: positions[2].lat.toString() + ',' + positions[2].lng.toString()
+        };
+
+
+    router.calculateRoute(
+        routeRequestParams,
+        onSuccessAlt21,
+        onError
+    );
+}
+
+function calculateRoute30 (platform) {
+    var router = platform.getRoutingService(),
+        routeRequestParams = {
+            mode: 'fastest;truck',
+            representation: 'display',
+            routeattributes : 'waypoints,summary,shape,legs',
+            maneuverattributes: 'direction,action',
+            waypoint0: positions[0].lat.toString() + ',' + positions[0].lng.toString(), // Brandenburg Gate
+            waypoint1: positions[4].lat.toString() + ',' + positions[4].lng.toString(), // Friedrichstraße Railway Station
+            waypoint2: positions[1].lat.toString() + ',' + positions[1].lng.toString(),
+            waypoint3: positions[0].lat.toString() + ',' + positions[0].lng.toString()
+        };
+
+
+    router.calculateRoute(
+        routeRequestParams,
+        onSuccessAlt30,
+        onError
+    );
+}
+
+function calculateRoute31 (platform) {
+    var router = platform.getRoutingService(),
+        routeRequestParams = {
+            mode: 'fastest;truck',
+            representation: 'display',
+            routeattributes : 'waypoints,summary,shape,legs',
+            maneuverattributes: 'direction,action',
+            waypoint0: positions[2].lat.toString() + ',' + positions[2].lng.toString(), // Brandenburg Gate
+            waypoint1: positions[3].lat.toString() + ',' + positions[3].lng.toString(), // Friedrichstraße Railway Station
+            waypoint2: positions[2].lat.toString() + ',' + positions[2].lng.toString()
+        };
+
+
+    router.calculateRoute(
+        routeRequestParams,
+        onSuccessAlt31,
+        onError
+    );
+}
+
+function calculateRoute32 (platform) {
+    var router = platform.getRoutingService(),
+        routeRequestParams = {
+            mode: 'fastest;truck',
+            representation: 'display',
+            routeattributes : 'waypoints,summary,shape,legs',
+            maneuverattributes: 'direction,action',
+            waypoint0: positions[5].lat.toString() + ',' + positions[5].lng.toString(), // Brandenburg Gate
+            waypoint1: positions[6].lat.toString() + ',' + positions[6].lng.toString(), // Friedrichstraße Railway Station
+            waypoint2: positions[5].lat.toString() + ',' + positions[5].lng.toString()
+        };
+
+
+    router.calculateRoute(
+        routeRequestParams,
+        onSuccessAlt32,
         onError
     );
 }
@@ -143,14 +271,92 @@ function onSuccess(result) {
     // ... etc.
 }
 
-function onSuccessAlt(result) {
+function onSuccessAlt10(result) {
     var route = result.response.route[0];
     /*
      * The styling of the route response on the map is entirely under the developer's control.
      * A representitive styling can be found the full JS + HTML code of this example
      * in the functions below:
      */
-    addRouteShapeToMapAlt(route);
+    addRouteShapeToMapAlt10(route);
+    addManueversToMap(route);
+
+    // ... etc.
+}
+
+function onSuccessAlt11(result) {
+    var route = result.response.route[0];
+    /*
+     * The styling of the route response on the map is entirely under the developer's control.
+     * A representitive styling can be found the full JS + HTML code of this example
+     * in the functions below:
+     */
+    addRouteShapeToMapAlt11(route);
+    addManueversToMap(route);
+
+    // ... etc.
+}
+
+function onSuccessAlt20(result) {
+    var route = result.response.route[0];
+    /*
+     * The styling of the route response on the map is entirely under the developer's control.
+     * A representitive styling can be found the full JS + HTML code of this example
+     * in the functions below:
+     */
+    addRouteShapeToMapAlt20(route);
+    addManueversToMap(route);
+
+    // ... etc.
+}
+
+function onSuccessAlt21(result) {
+    var route = result.response.route[0];
+    /*
+     * The styling of the route response on the map is entirely under the developer's control.
+     * A representitive styling can be found the full JS + HTML code of this example
+     * in the functions below:
+     */
+    addRouteShapeToMapAlt21(route);
+    addManueversToMap(route);
+
+    // ... etc.
+}
+
+function onSuccessAlt30(result) {
+    var route = result.response.route[0];
+    /*
+     * The styling of the route response on the map is entirely under the developer's control.
+     * A representitive styling can be found the full JS + HTML code of this example
+     * in the functions below:
+     */
+    addRouteShapeToMapAlt30(route);
+    addManueversToMap(route);
+
+    // ... etc.
+}
+
+function onSuccessAlt31(result) {
+    var route = result.response.route[0];
+    /*
+     * The styling of the route response on the map is entirely under the developer's control.
+     * A representitive styling can be found the full JS + HTML code of this example
+     * in the functions below:
+     */
+    addRouteShapeToMapAlt31(route);
+    addManueversToMap(route);
+
+    // ... etc.
+}
+
+function onSuccessAlt32(result) {
+    var route = result.response.route[0];
+    /*
+     * The styling of the route response on the map is entirely under the developer's control.
+     * A representitive styling can be found the full JS + HTML code of this example
+     * in the functions below:
+     */
+    addRouteShapeToMapAlt32(route);
     addManueversToMap(route);
 
     // ... etc.
@@ -244,7 +450,7 @@ function addRouteShapeToMap(route){
     map.setViewBounds(polyline.getBounds(), true);
 }
 
-function addRouteShapeToMapAlt(route){
+function addRouteShapeToMapAlt10(route){
     var strip = new H.geo.Strip(),
         routeShape = route.shape,
         polyline;
@@ -257,7 +463,145 @@ function addRouteShapeToMapAlt(route){
     polyline = new H.map.Polyline(strip, {
         style: {
             lineWidth: 4,
-            strokeColor: 'rgba(128, 0, 0, 0.7)'
+            strokeColor: 'rgba(255, 0, 0, 0.7)'
+        }
+    });
+    // Add the polyline to the map
+    map.addObject(polyline);
+    markers.push(polyline);
+    // And zoom to its bounding rectangle
+    map.setViewBounds(polyline.getBounds(), true);
+}
+
+function addRouteShapeToMapAlt11(route){
+    var strip = new H.geo.Strip(),
+        routeShape = route.shape,
+        polyline;
+
+    routeShape.forEach(function(point) {
+        var parts = point.split(',');
+        strip.pushLatLngAlt(parts[0], parts[1]);
+    });
+
+    polyline = new H.map.Polyline(strip, {
+        style: {
+            lineWidth: 4,
+            strokeColor: 'rgba(0, 255, 0, 0.7)'
+        }
+    });
+    // Add the polyline to the map
+    map.addObject(polyline);
+    markers.push(polyline);
+    // And zoom to its bounding rectangle
+    map.setViewBounds(polyline.getBounds(), true);
+}
+
+function addRouteShapeToMapAlt20(route){
+    var strip = new H.geo.Strip(),
+        routeShape = route.shape,
+        polyline;
+
+    routeShape.forEach(function(point) {
+        var parts = point.split(',');
+        strip.pushLatLngAlt(parts[0], parts[1]);
+    });
+
+    polyline = new H.map.Polyline(strip, {
+        style: {
+            lineWidth: 4,
+            strokeColor: 'rgba(0, 255, 0, 0.7)'
+        }
+    });
+    // Add the polyline to the map
+    map.addObject(polyline);
+    markers.push(polyline);
+    // And zoom to its bounding rectangle
+    map.setViewBounds(polyline.getBounds(), true);
+}
+
+function addRouteShapeToMapAlt21(route){
+    var strip = new H.geo.Strip(),
+        routeShape = route.shape,
+        polyline;
+
+    routeShape.forEach(function(point) {
+        var parts = point.split(',');
+        strip.pushLatLngAlt(parts[0], parts[1]);
+    });
+
+    polyline = new H.map.Polyline(strip, {
+        style: {
+            lineWidth: 4,
+            strokeColor: 'rgba(255, 0, 0, 0.7)'
+        }
+    });
+    // Add the polyline to the map
+    map.addObject(polyline);
+    markers.push(polyline);
+    // And zoom to its bounding rectangle
+    map.setViewBounds(polyline.getBounds(), true);
+}
+
+function addRouteShapeToMapAlt30(route){
+    var strip = new H.geo.Strip(),
+        routeShape = route.shape,
+        polyline;
+
+    routeShape.forEach(function(point) {
+        var parts = point.split(',');
+        strip.pushLatLngAlt(parts[0], parts[1]);
+    });
+
+    polyline = new H.map.Polyline(strip, {
+        style: {
+            lineWidth: 4,
+            strokeColor: 'rgba(0, 0, 255, 0.7)'
+        }
+    });
+    // Add the polyline to the map
+    map.addObject(polyline);
+    markers.push(polyline);
+    // And zoom to its bounding rectangle
+    map.setViewBounds(polyline.getBounds(), true);
+}
+
+function addRouteShapeToMapAlt31(route){
+    var strip = new H.geo.Strip(),
+        routeShape = route.shape,
+        polyline;
+
+    routeShape.forEach(function(point) {
+        var parts = point.split(',');
+        strip.pushLatLngAlt(parts[0], parts[1]);
+    });
+
+    polyline = new H.map.Polyline(strip, {
+        style: {
+            lineWidth: 4,
+            strokeColor: 'rgba(0, 255, 0, 0.7)'
+        }
+    });
+    // Add the polyline to the map
+    map.addObject(polyline);
+    markers.push(polyline);
+    // And zoom to its bounding rectangle
+    map.setViewBounds(polyline.getBounds(), true);
+}
+
+function addRouteShapeToMapAlt32(route){
+    var strip = new H.geo.Strip(),
+        routeShape = route.shape,
+        polyline;
+
+    routeShape.forEach(function(point) {
+        var parts = point.split(',');
+        strip.pushLatLngAlt(parts[0], parts[1]);
+    });
+
+    polyline = new H.map.Polyline(strip, {
+        style: {
+            lineWidth: 4,
+            strokeColor: 'rgba(255, 0, 0, 0.7)'
         }
     });
     // Add the polyline to the map
@@ -413,9 +757,20 @@ $(document).keypress(function(e){
         var circle = new H.map.Circle({lat: 50.929181, lng: 3.994925}, 8000,
                 { style: customStyle });
 
-        map.addObject(circle);
-        addWaypoint();
+        //map.addObject(circle);
 
+        //calculateRoute01(platform);
+        //calculateRoute02(platform);
+
+        //calculateRoute10(platform);
+        //calculateRoute11(platform);
+
+        //calculateRoute20(platform);
+        //calculateRoute21(platform);
+
+        //calculateRoute30(platform);
+        //calculateRoute31(platform);
+        //calculateRoute32(platform);
     }
 });
 
@@ -424,26 +779,148 @@ function start(){
     geocoder.geocode(Zee, onResult, function(e) {
         alert(e);
     });
+
+
+
+
+
+
+}
+
+var onResult = function(result) {
+    var locations = result.Response.View[0].Result,
+        position,
+        marker;
+    // Add a marker for each location found
+
+    for (i = 0;  i < locations.length; i++) {
+        position = {
+            lat: locations[i].Location.DisplayPosition.Latitude,
+            lng: locations[i].Location.DisplayPosition.Longitude
+        };
+        positions.push(position);
+        marker = new H.map.Marker(position);
+        map.addObject(marker);
+        markers.push(marker);
+    }
+
     var Libra = {searchText: 'Libramont, Belgie'};
-    geocoder.geocode(Libra, onResult, function(e) {
+    geocoder.geocode(Libra, onResult1, function(e) {
         alert(e);
     });
+};
+
+var onResult1 = function(result) {
+    var locations = result.Response.View[0].Result,
+        position,
+        marker;
+    // Add a marker for each location found
+
+    for (i = 0;  i < locations.length; i++) {
+        position = {
+            lat: locations[i].Location.DisplayPosition.Latitude,
+            lng: locations[i].Location.DisplayPosition.Longitude
+        };
+        positions.push(position);
+        marker = new H.map.Marker(position);
+        map.addObject(marker);
+        markers.push(marker);
+    }
 
     var Duin = {searchText: 'Duinkerke, Frankrijk'};
-    geocoder.geocode(Duin, onResult, function(e) {
+    geocoder.geocode(Duin, onResult2, function(e) {
         alert(e);
     });
-    var Lens = {searchText: 'Lens, Frankrijk'};
-    geocoder.geocode(Lens, onResult, function(e) {
-        alert(e);
-    });
-}
+};
 
-function addWaypoint()
-{
-    var Waypoint = [51.062891, 5.157391];
-    calculateRouteFromAtoBThroughC(platform, Waypoint);
-}
+var onResult2 = function(result) {
+    var locations = result.Response.View[0].Result,
+        position,
+        marker;
+    // Add a marker for each location found
+
+    for (i = 0;  i < locations.length; i++) {
+        position = {
+            lat: locations[i].Location.DisplayPosition.Latitude,
+            lng: locations[i].Location.DisplayPosition.Longitude
+        };
+        positions.push(position);
+        marker = new H.map.Marker(position);
+        map.addObject(marker);
+        markers.push(marker);
+    }
+
+    var Lens = {searchText: 'Lens, Frankrijk'};
+    geocoder.geocode(Lens, onResult3, function(e) {
+        alert(e);
+    });
+};
+
+var onResult3 = function(result) {
+    var locations = result.Response.View[0].Result,
+        position,
+        marker;
+    // Add a marker for each location found
+
+    for (i = 0;  i < locations.length; i++) {
+        position = {
+            lat: locations[i].Location.DisplayPosition.Latitude,
+            lng: locations[i].Location.DisplayPosition.Longitude
+        };
+        positions.push(position);
+        marker = new H.map.Marker(position);
+        map.addObject(marker);
+        markers.push(marker);
+    }
+
+    var Waypoint = {lat: 51.062891, lng: 5.157391};
+    positions.push(Waypoint);
+    var Oostende = {searchText: 'Oostende, Belgie'};
+    geocoder.geocode(Oostende, onResult4, function(e) {
+        alert(e);
+    });
+};
+
+var onResult4 = function(result) {
+    var locations = result.Response.View[0].Result,
+        position,
+        marker;
+    // Add a marker for each location found
+
+    for (i = 0;  i < locations.length; i++) {
+        position = {
+            lat: locations[i].Location.DisplayPosition.Latitude,
+            lng: locations[i].Location.DisplayPosition.Longitude
+        };
+        positions.push(position);
+        marker = new H.map.Marker(position);
+        map.addObject(marker);
+        markers.push(marker);
+    }
+
+    var Marche = {searchText: 'Marche-en-Famenne, Belgie'};
+    geocoder.geocode(Marche, onResult5, function(e) {
+        alert(e);
+    });
+};
+
+var onResult5 = function(result) {
+    var locations = result.Response.View[0].Result,
+        position,
+        marker;
+    // Add a marker for each location found
+
+    for (i = 0;  i < locations.length; i++) {
+        position = {
+            lat: locations[i].Location.DisplayPosition.Latitude,
+            lng: locations[i].Location.DisplayPosition.Longitude
+        };
+        positions.push(position);
+        marker = new H.map.Marker(position);
+        map.addObject(marker);
+        markers.push(marker);
+    }
+};
 
 start();
 
