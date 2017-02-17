@@ -1,0 +1,21 @@
+#wrapper {
+    border: 1px solid black;
+}
+#div1 {
+    display: inline-block;
+    width:300px;
+    height:160px;
+    border: 1px solid black;
+}
+#div2 {
+    display: inline-block;
+    width:300px;
+    height:160px;
+    border: 1px solid black;
+}
+#div3 {
+    display: inline-block;
+    width:300px;
+    height:160px;
+    border: 1px solid black;
+}

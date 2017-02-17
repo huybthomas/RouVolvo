@@ -25,34 +25,6 @@
  * @param   {H.service.Platform} platform    A stub class to access HERE services
  */
 
-function processForm(e) {
-    if (e.preventDefault) e.preventDefault();
-
-    positions = [];
-
-    /* do what you want with the form */
-    var from = document.getElementById('From');
-    var fromString = {searchText: from.value};
-    var to = document.getElementById('To');
-    var toString = {searchText: to.value};
-
-    map.removeObjects(markers);
-    markers = [];
-
-// Call the geocode method with the geocoding parameters,
-// the callback and an error callback function (called if a
-// communication error occurs):
-    geocoder.geocode(fromString, onResult, function(e) {
-        alert(e);
-    });
-    geocoder.geocode(toString, onResult, function(e) {
-        alert(e);
-    });
-
-    // You must return false to prevent the default form behavior
-    return false;
-}
-
 var positions = [];
 var markers = [];
 
@@ -62,6 +34,10 @@ var platform = new H.service.Platform({
     useCIT: true,
     useHTTPS: true
 });
+
+var option1 = [];
+var option2 = [];
+var option3 = [];
 
 // Get an instance of the geocoding service:
 var geocoder = platform.getGeocodingService();
@@ -279,7 +255,7 @@ function onSuccessAlt10(result) {
      * in the functions below:
      */
     addRouteShapeToMapAlt10(route);
-    addManueversToMap(route);
+    addManueversToMapAlt10(route);
 
     // ... etc.
 }
@@ -292,7 +268,7 @@ function onSuccessAlt11(result) {
      * in the functions below:
      */
     addRouteShapeToMapAlt11(route);
-    addManueversToMap(route);
+    addManueversToMapAlt11(route);
 
     // ... etc.
 }
@@ -305,7 +281,7 @@ function onSuccessAlt20(result) {
      * in the functions below:
      */
     addRouteShapeToMapAlt20(route);
-    addManueversToMap(route);
+    addManueversToMapAlt20(route);
 
     // ... etc.
 }
@@ -318,7 +294,7 @@ function onSuccessAlt21(result) {
      * in the functions below:
      */
     addRouteShapeToMapAlt21(route);
-    addManueversToMap(route);
+    addManueversToMapAlt21(route);
 
     // ... etc.
 }
@@ -331,7 +307,7 @@ function onSuccessAlt30(result) {
      * in the functions below:
      */
     addRouteShapeToMapAlt30(route);
-    addManueversToMap(route);
+    addManueversToMapAlt30(route);
 
     // ... etc.
 }
@@ -344,7 +320,7 @@ function onSuccessAlt31(result) {
      * in the functions below:
      */
     addRouteShapeToMapAlt31(route);
-    addManueversToMap(route);
+    addManueversToMap31(route);
 
     // ... etc.
 }
@@ -357,7 +333,7 @@ function onSuccessAlt32(result) {
      * in the functions below:
      */
     addRouteShapeToMapAlt32(route);
-    addManueversToMap(route);
+    addManueversToMap32(route);
 
     // ... etc.
 }
@@ -366,14 +342,6 @@ function onSuccessAlt32(result) {
  * This function will be called if a communication error occurs during the JSON-P request
  * @param  {Object} error  The error message received.
  */
-
-var form = document.getElementById('Form');
-if (form.attachEvent) {
-    form.attachEvent("submit", processForm);
-} else {
-    form.addEventListener("submit", processForm);
-}
-
 function onError(error) {
     alert('Ooops!');
 }
@@ -467,7 +435,8 @@ function addRouteShapeToMapAlt10(route){
         }
     });
     // Add the polyline to the map
-    map.addObject(polyline);
+    //map.addObject(polyline);
+    option1.push(polyline);
     markers.push(polyline);
     // And zoom to its bounding rectangle
     map.setViewBounds(polyline.getBounds(), true);
@@ -490,7 +459,8 @@ function addRouteShapeToMapAlt11(route){
         }
     });
     // Add the polyline to the map
-    map.addObject(polyline);
+    //map.addObject(polyline);
+    option1.push(polyline);
     markers.push(polyline);
     // And zoom to its bounding rectangle
     map.setViewBounds(polyline.getBounds(), true);
@@ -513,7 +483,8 @@ function addRouteShapeToMapAlt20(route){
         }
     });
     // Add the polyline to the map
-    map.addObject(polyline);
+    //map.addObject(polyline);
+    option2.push(polyline);
     markers.push(polyline);
     // And zoom to its bounding rectangle
     map.setViewBounds(polyline.getBounds(), true);
@@ -536,7 +507,8 @@ function addRouteShapeToMapAlt21(route){
         }
     });
     // Add the polyline to the map
-    map.addObject(polyline);
+    //map.addObject(polyline);
+    option2.push(polyline);
     markers.push(polyline);
     // And zoom to its bounding rectangle
     map.setViewBounds(polyline.getBounds(), true);
@@ -559,7 +531,8 @@ function addRouteShapeToMapAlt30(route){
         }
     });
     // Add the polyline to the map
-    map.addObject(polyline);
+    //map.addObject(polyline);
+    option3.push(polyline);
     markers.push(polyline);
     // And zoom to its bounding rectangle
     map.setViewBounds(polyline.getBounds(), true);
@@ -582,7 +555,8 @@ function addRouteShapeToMapAlt31(route){
         }
     });
     // Add the polyline to the map
-    map.addObject(polyline);
+    //map.addObject(polyline);
+    option3.push(polyline);
     markers.push(polyline);
     // And zoom to its bounding rectangle
     map.setViewBounds(polyline.getBounds(), true);
@@ -605,7 +579,8 @@ function addRouteShapeToMapAlt32(route){
         }
     });
     // Add the polyline to the map
-    map.addObject(polyline);
+    //map.addObject(polyline);
+    option3.push(polyline);
     markers.push(polyline);
     // And zoom to its bounding rectangle
     map.setViewBounds(polyline.getBounds(), true);
@@ -649,6 +624,272 @@ function addManueversToMap(route){
 
     // Add the maneuvers group to the map
     map.addObject(group);
+    markers.push(group);
+}
+
+function addManueversToMapAlt10(route){
+    var svgMarkup = '<svg width="18" height="18" ' +
+            'xmlns="http://www.w3.org/2000/svg">' +
+            '<circle cx="8" cy="8" r="8" ' +
+            'fill="#1b468d" stroke="white" stroke-width="1"  />' +
+            '</svg>',
+        dotIcon = new H.map.Icon(svgMarkup, {anchor: {x:8, y:8}}),
+        group = new  H.map.Group(),
+        i,
+        j;
+
+    // Add a marker for each maneuver
+    for (i = 0;  i < route.leg.length; i += 1) {
+        for (j = 0;  j < route.leg[i].maneuver.length; j += 1) {
+            // Get the next maneuver.
+            maneuver = route.leg[i].maneuver[j];
+            // Add a marker to the maneuvers group
+            var marker =  new H.map.Marker({
+                    lat: maneuver.position.latitude,
+                    lng: maneuver.position.longitude} ,
+                {icon: dotIcon});
+            marker.instruction = maneuver.instruction;
+            group.addObject(marker);
+        }
+    }
+
+    group.addEventListener('tap', function (evt) {
+        map.setCenter(evt.target.getPosition());
+        openBubble(
+            evt.target.getPosition(), evt.target.instruction);
+    }, false);
+
+    // Add the maneuvers group to the map
+    //map.addObject(group);
+    option1.push(group);
+    markers.push(group);
+}
+
+function addManueversToMapAlt11(route){
+    var svgMarkup = '<svg width="18" height="18" ' +
+            'xmlns="http://www.w3.org/2000/svg">' +
+            '<circle cx="8" cy="8" r="8" ' +
+            'fill="#1b468d" stroke="white" stroke-width="1"  />' +
+            '</svg>',
+        dotIcon = new H.map.Icon(svgMarkup, {anchor: {x:8, y:8}}),
+        group = new  H.map.Group(),
+        i,
+        j;
+
+    // Add a marker for each maneuver
+    for (i = 0;  i < route.leg.length; i += 1) {
+        for (j = 0;  j < route.leg[i].maneuver.length; j += 1) {
+            // Get the next maneuver.
+            maneuver = route.leg[i].maneuver[j];
+            // Add a marker to the maneuvers group
+            var marker =  new H.map.Marker({
+                    lat: maneuver.position.latitude,
+                    lng: maneuver.position.longitude} ,
+                {icon: dotIcon});
+            marker.instruction = maneuver.instruction;
+            group.addObject(marker);
+        }
+    }
+
+    group.addEventListener('tap', function (evt) {
+        map.setCenter(evt.target.getPosition());
+        openBubble(
+            evt.target.getPosition(), evt.target.instruction);
+    }, false);
+
+    // Add the maneuvers group to the map
+    //map.addObject(group);
+    option1.push(group);
+    markers.push(group);
+}
+
+function addManueversToMapAlt20(route){
+    var svgMarkup = '<svg width="18" height="18" ' +
+            'xmlns="http://www.w3.org/2000/svg">' +
+            '<circle cx="8" cy="8" r="8" ' +
+            'fill="#1b468d" stroke="white" stroke-width="1"  />' +
+            '</svg>',
+        dotIcon = new H.map.Icon(svgMarkup, {anchor: {x:8, y:8}}),
+        group = new  H.map.Group(),
+        i,
+        j;
+
+    // Add a marker for each maneuver
+    for (i = 0;  i < route.leg.length; i += 1) {
+        for (j = 0;  j < route.leg[i].maneuver.length; j += 1) {
+            // Get the next maneuver.
+            maneuver = route.leg[i].maneuver[j];
+            // Add a marker to the maneuvers group
+            var marker =  new H.map.Marker({
+                    lat: maneuver.position.latitude,
+                    lng: maneuver.position.longitude} ,
+                {icon: dotIcon});
+            marker.instruction = maneuver.instruction;
+            group.addObject(marker);
+        }
+    }
+
+    group.addEventListener('tap', function (evt) {
+        map.setCenter(evt.target.getPosition());
+        openBubble(
+            evt.target.getPosition(), evt.target.instruction);
+    }, false);
+
+    // Add the maneuvers group to the map
+    //map.addObject(group);
+    option2.push(group);
+    markers.push(group);
+}
+
+function addManueversToMapAlt21(route){
+    var svgMarkup = '<svg width="18" height="18" ' +
+            'xmlns="http://www.w3.org/2000/svg">' +
+            '<circle cx="8" cy="8" r="8" ' +
+            'fill="#1b468d" stroke="white" stroke-width="1"  />' +
+            '</svg>',
+        dotIcon = new H.map.Icon(svgMarkup, {anchor: {x:8, y:8}}),
+        group = new  H.map.Group(),
+        i,
+        j;
+
+    // Add a marker for each maneuver
+    for (i = 0;  i < route.leg.length; i += 1) {
+        for (j = 0;  j < route.leg[i].maneuver.length; j += 1) {
+            // Get the next maneuver.
+            maneuver = route.leg[i].maneuver[j];
+            // Add a marker to the maneuvers group
+            var marker =  new H.map.Marker({
+                    lat: maneuver.position.latitude,
+                    lng: maneuver.position.longitude} ,
+                {icon: dotIcon});
+            marker.instruction = maneuver.instruction;
+            group.addObject(marker);
+        }
+    }
+
+    group.addEventListener('tap', function (evt) {
+        map.setCenter(evt.target.getPosition());
+        openBubble(
+            evt.target.getPosition(), evt.target.instruction);
+    }, false);
+
+    // Add the maneuvers group to the map
+    //map.addObject(group);
+    option2.push(group);
+    markers.push(group);
+}
+
+function addManueversToMapAlt30(route){
+    var svgMarkup = '<svg width="18" height="18" ' +
+            'xmlns="http://www.w3.org/2000/svg">' +
+            '<circle cx="8" cy="8" r="8" ' +
+            'fill="#1b468d" stroke="white" stroke-width="1"  />' +
+            '</svg>',
+        dotIcon = new H.map.Icon(svgMarkup, {anchor: {x:8, y:8}}),
+        group = new  H.map.Group(),
+        i,
+        j;
+
+    // Add a marker for each maneuver
+    for (i = 0;  i < route.leg.length; i += 1) {
+        for (j = 0;  j < route.leg[i].maneuver.length; j += 1) {
+            // Get the next maneuver.
+            maneuver = route.leg[i].maneuver[j];
+            // Add a marker to the maneuvers group
+            var marker =  new H.map.Marker({
+                    lat: maneuver.position.latitude,
+                    lng: maneuver.position.longitude} ,
+                {icon: dotIcon});
+            marker.instruction = maneuver.instruction;
+            group.addObject(marker);
+        }
+    }
+
+    group.addEventListener('tap', function (evt) {
+        map.setCenter(evt.target.getPosition());
+        openBubble(
+            evt.target.getPosition(), evt.target.instruction);
+    }, false);
+
+    // Add the maneuvers group to the map
+    //map.addObject(group);
+    option3.push(group);
+    markers.push(group);
+}
+
+function addManueversToMapAlt31(route){
+    var svgMarkup = '<svg width="18" height="18" ' +
+            'xmlns="http://www.w3.org/2000/svg">' +
+            '<circle cx="8" cy="8" r="8" ' +
+            'fill="#1b468d" stroke="white" stroke-width="1"  />' +
+            '</svg>',
+        dotIcon = new H.map.Icon(svgMarkup, {anchor: {x:8, y:8}}),
+        group = new  H.map.Group(),
+        i,
+        j;
+
+    // Add a marker for each maneuver
+    for (i = 0;  i < route.leg.length; i += 1) {
+        for (j = 0;  j < route.leg[i].maneuver.length; j += 1) {
+            // Get the next maneuver.
+            maneuver = route.leg[i].maneuver[j];
+            // Add a marker to the maneuvers group
+            var marker =  new H.map.Marker({
+                    lat: maneuver.position.latitude,
+                    lng: maneuver.position.longitude} ,
+                {icon: dotIcon});
+            marker.instruction = maneuver.instruction;
+            group.addObject(marker);
+        }
+    }
+
+    group.addEventListener('tap', function (evt) {
+        map.setCenter(evt.target.getPosition());
+        openBubble(
+            evt.target.getPosition(), evt.target.instruction);
+    }, false);
+
+    // Add the maneuvers group to the map
+    //map.addObject(group);
+    option3.push(group);
+    markers.push(group);
+}
+
+function addManueversToMapAlt32(route){
+    var svgMarkup = '<svg width="18" height="18" ' +
+            'xmlns="http://www.w3.org/2000/svg">' +
+            '<circle cx="8" cy="8" r="8" ' +
+            'fill="#1b468d" stroke="white" stroke-width="1"  />' +
+            '</svg>',
+        dotIcon = new H.map.Icon(svgMarkup, {anchor: {x:8, y:8}}),
+        group = new  H.map.Group(),
+        i,
+        j;
+
+    // Add a marker for each maneuver
+    for (i = 0;  i < route.leg.length; i += 1) {
+        for (j = 0;  j < route.leg[i].maneuver.length; j += 1) {
+            // Get the next maneuver.
+            maneuver = route.leg[i].maneuver[j];
+            // Add a marker to the maneuvers group
+            var marker =  new H.map.Marker({
+                    lat: maneuver.position.latitude,
+                    lng: maneuver.position.longitude} ,
+                {icon: dotIcon});
+            marker.instruction = maneuver.instruction;
+            group.addObject(marker);
+        }
+    }
+
+    group.addEventListener('tap', function (evt) {
+        map.setCenter(evt.target.getPosition());
+        openBubble(
+            evt.target.getPosition(), evt.target.instruction);
+    }, false);
+
+    // Add the maneuvers group to the map
+    //map.addObject(group);
+    option3.push(group);
     markers.push(group);
 }
 
@@ -757,20 +998,7 @@ $(document).keypress(function(e){
         var circle = new H.map.Circle({lat: 50.929181, lng: 3.994925}, 8000,
                 { style: customStyle });
 
-        //map.addObject(circle);
-
-        //calculateRoute01(platform);
-        //calculateRoute02(platform);
-
-        //calculateRoute10(platform);
-        //calculateRoute11(platform);
-
-        //calculateRoute20(platform);
-        //calculateRoute21(platform);
-
-        //calculateRoute30(platform);
-        //calculateRoute31(platform);
-        //calculateRoute32(platform);
+        map.addObject(circle);
     }
 });
 
@@ -779,12 +1007,6 @@ function start(){
     geocoder.geocode(Zee, onResult, function(e) {
         alert(e);
     });
-
-
-
-
-
-
 }
 
 var onResult = function(result) {
@@ -920,7 +1142,57 @@ var onResult5 = function(result) {
         map.addObject(marker);
         markers.push(marker);
     }
+
+    calculateRoute01(platform);
+    calculateRoute02(platform);
+
+    calculateRoute10(platform);
+    calculateRoute11(platform);
+
+    calculateRoute20(platform);
+    calculateRoute21(platform);
+
+    calculateRoute30(platform);
+    calculateRoute31(platform);
+    calculateRoute32(platform);
 };
+
+var div1 = document.getElementById('div1');
+var div2 = document.getElementById('div2');
+var div3 = document.getElementById('div3');
+
+div1.addEventListener("mouseover", div1MouseOver);
+div1.addEventListener("mouseleave", div1MouseLeave);
+
+div2.addEventListener("mouseover", div2MouseOver);
+div2.addEventListener("mouseleave", div2MouseLeave);
+
+div3.addEventListener("mouseover", div3MouseOver);
+div3.addEventListener("mouseleave", div3MouseLeave);
+
+function div1MouseOver(){
+    map.addObjects(option1);
+}
+
+function div1MouseLeave(){
+    map.removeObjects(option1);
+}
+
+function div2MouseOver(){
+    map.addObjects(option2);
+}
+
+function div2MouseLeave(){
+    map.removeObjects(option2);
+}
+
+function div3MouseOver(){
+    map.addObjects(option3);
+}
+
+function div3MouseLeave(){
+    map.removeObjects(option3);
+}
 
 start();
 
