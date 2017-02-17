@@ -109,6 +109,27 @@ function calculateRouteFromAtoB (platform, i) {
     );
 }
 
+function calculateRouteFromAtoBThroughC (platform, waypoint) {
+    var router = platform.getRoutingService(),
+        routeRequestParams = {
+            mode: 'fastest;truck',
+            representation: 'display',
+            routeattributes : 'waypoints,summary,shape,legs',
+            maneuverattributes: 'direction,action',
+            waypoint0: positions[0].lat.toString() + ',' + positions[0].lng.toString(), // Brandenburg Gate
+            waypoint1: waypoint[0].toString()+','+waypoint[1].toString(),
+            waypoint2: positions[1].lat.toString() + ',' + positions[1].lng.toString()  // Friedrichstraße Railway Station
+
+        };
+
+
+    router.calculateRoute(
+        routeRequestParams,
+        onSuccessAlt,
+        onError
+    );
+}
+
 function onSuccess(result) {
     var route = result.response.route[0];
     /*
@@ -117,6 +138,19 @@ function onSuccess(result) {
      * in the functions below:
      */
     addRouteShapeToMap(route);
+    addManueversToMap(route);
+
+    // ... etc.
+}
+
+function onSuccessAlt(result) {
+    var route = result.response.route[0];
+    /*
+     * The styling of the route response on the map is entirely under the developer's control.
+     * A representitive styling can be found the full JS + HTML code of this example
+     * in the functions below:
+     */
+    addRouteShapeToMapAlt(route);
     addManueversToMap(route);
 
     // ... etc.
@@ -201,6 +235,29 @@ function addRouteShapeToMap(route){
         style: {
             lineWidth: 4,
             strokeColor: 'rgba(0, 128, 255, 0.7)'
+        }
+    });
+    // Add the polyline to the map
+    map.addObject(polyline);
+    markers.push(polyline);
+    // And zoom to its bounding rectangle
+    map.setViewBounds(polyline.getBounds(), true);
+}
+
+function addRouteShapeToMapAlt(route){
+    var strip = new H.geo.Strip(),
+        routeShape = route.shape,
+        polyline;
+
+    routeShape.forEach(function(point) {
+        var parts = point.split(',');
+        strip.pushLatLngAlt(parts[0], parts[1]);
+    });
+
+    polyline = new H.map.Polyline(strip, {
+        style: {
+            lineWidth: 4,
+            strokeColor: 'rgba(128, 0, 0, 0.7)'
         }
     });
     // Add the polyline to the map
@@ -357,6 +414,7 @@ $(document).keypress(function(e){
                 { style: customStyle });
 
         map.addObject(circle);
+        addWaypoint();
 
     }
 });
@@ -379,6 +437,12 @@ function start(){
     geocoder.geocode(Lens, onResult, function(e) {
         alert(e);
     });
+}
+
+function addWaypoint()
+{
+    var Waypoint = [51.062891, 5.157391];
+    calculateRouteFromAtoBThroughC(platform, Waypoint);
 }
 
 start();
