@@ -344,3 +344,9 @@ $(document).keypress(function(e){
     }
 });
 
+function start(){
+
+}
+
+start();
+
