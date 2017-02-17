@@ -31,7 +31,7 @@
             <!-- Application logo and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <div class="brand-centered">
-                    <a class="navbar-brand" href="#"><img class="brand-image" alt="RouVolvo" th:src="@{/images/RouVolveLogo.png}"/><span style="padding-left: 5px" th:text="#{application.package}">RouVolvo</span></a>
+                    <a class="navbar-brand" href="#"><img class="brand-image" alt="RouVolve" th:src="@{/images/RouVolveLogo.png}"/><span style="padding-left: 5px" th:text="#{application.package}">RouVolve</span></a>
                 </div>
 
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
@@ -51,7 +51,7 @@
                 </ul>
                 <!-- Right buttons -->
                 <ul class="nav navbar-nav navbar-right" style="padding-right: 15px">
-                    <li sec:authorize="hasRole('logon')"><a th:href="@{/settings}"><span class="glyphicon glyphicon-cog"></span><span> </span><span th:text="#{navbar.settings}">Settings</span></a></li>
+                    <li sec:authorize="hasRole('logon')"><a th:href="@{/}"><span class="glyphicon glyphicon-cog"></span><span> </span><span th:text="#{navbar.settings}">Settings</span></a></li>
                     <li sec:authorize="!hasRole('logon')"><a th:href="@{/about}"><span class="glyphicon glyphicon-info-sign"></span><span> </span><span th:text="#{navbar.about}">About</span></a></li>
                     <li sec:authorize="hasRole('logon')" class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span><span> </span><span th:text="${#authentication.name}">Username</span><span> </span><span class="caret"></span></a>
