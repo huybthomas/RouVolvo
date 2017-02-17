@@ -110,26 +110,6 @@ function calculateRoute10 (platform) {
     );
 }
 
-function calculateRoute11 (platform) {
-    var router = platform.getRoutingService(),
-        routeRequestParams = {
-            mode: 'fastest;truck',
-            representation: 'display',
-            routeattributes : 'waypoints,summary,shape,legs',
-            maneuverattributes: 'direction,action',
-            waypoint0: positions[2].lat.toString() + ',' + positions[2].lng.toString(), // Brandenburg Gate
-            waypoint1: positions[3].lat.toString() + ',' + positions[3].lng.toString(), // Friedrichstraße Railway Station
-            waypoint2: positions[2].lat.toString() + ',' + positions[2].lng.toString()
-        };
-
-
-    router.calculateRoute(
-        routeRequestParams,
-        onSuccessAlt11,
-        onError
-    );
-}
-
 function calculateRoute20 (platform) {
     var router = platform.getRoutingService(),
         routeRequestParams = {
@@ -256,19 +236,6 @@ function onSuccessAlt10(result) {
      */
     addRouteShapeToMapAlt10(route);
     addManueversToMapAlt10(route);
-
-    // ... etc.
-}
-
-function onSuccessAlt11(result) {
-    var route = result.response.route[0];
-    /*
-     * The styling of the route response on the map is entirely under the developer's control.
-     * A representitive styling can be found the full JS + HTML code of this example
-     * in the functions below:
-     */
-    addRouteShapeToMapAlt11(route);
-    addManueversToMapAlt11(route);
 
     // ... etc.
 }
@@ -442,55 +409,7 @@ function addRouteShapeToMapAlt10(route){
     map.setViewBounds(polyline.getBounds(), true);
 }
 
-function addRouteShapeToMapAlt11(route){
-    var strip = new H.geo.Strip(),
-        routeShape = route.shape,
-        polyline;
-
-    routeShape.forEach(function(point) {
-        var parts = point.split(',');
-        strip.pushLatLngAlt(parts[0], parts[1]);
-    });
-
-    polyline = new H.map.Polyline(strip, {
-        style: {
-            lineWidth: 4,
-            strokeColor: 'rgba(0, 255, 0, 0.7)'
-        }
-    });
-    // Add the polyline to the map
-    //map.addObject(polyline);
-    option1.push(polyline);
-    markers.push(polyline);
-    // And zoom to its bounding rectangle
-    map.setViewBounds(polyline.getBounds(), true);
-}
-
 function addRouteShapeToMapAlt20(route){
-    var strip = new H.geo.Strip(),
-        routeShape = route.shape,
-        polyline;
-
-    routeShape.forEach(function(point) {
-        var parts = point.split(',');
-        strip.pushLatLngAlt(parts[0], parts[1]);
-    });
-
-    polyline = new H.map.Polyline(strip, {
-        style: {
-            lineWidth: 4,
-            strokeColor: 'rgba(0, 255, 0, 0.7)'
-        }
-    });
-    // Add the polyline to the map
-    //map.addObject(polyline);
-    option2.push(polyline);
-    markers.push(polyline);
-    // And zoom to its bounding rectangle
-    map.setViewBounds(polyline.getBounds(), true);
-}
-
-function addRouteShapeToMapAlt21(route){
     var strip = new H.geo.Strip(),
         routeShape = route.shape,
         polyline;
@@ -514,6 +433,30 @@ function addRouteShapeToMapAlt21(route){
     map.setViewBounds(polyline.getBounds(), true);
 }
 
+function addRouteShapeToMapAlt21(route){
+    var strip = new H.geo.Strip(),
+        routeShape = route.shape,
+        polyline;
+
+    routeShape.forEach(function(point) {
+        var parts = point.split(',');
+        strip.pushLatLngAlt(parts[0], parts[1]);
+    });
+
+    polyline = new H.map.Polyline(strip, {
+        style: {
+            lineWidth: 4,
+            strokeColor: 'rgba(0, 255, 0, 0.7)'
+        }
+    });
+    // Add the polyline to the map
+    //map.addObject(polyline);
+    option2.push(polyline);
+    markers.push(polyline);
+    // And zoom to its bounding rectangle
+    map.setViewBounds(polyline.getBounds(), true);
+}
+
 function addRouteShapeToMapAlt30(route){
     var strip = new H.geo.Strip(),
         routeShape = route.shape,
@@ -527,7 +470,7 @@ function addRouteShapeToMapAlt30(route){
     polyline = new H.map.Polyline(strip, {
         style: {
             lineWidth: 4,
-            strokeColor: 'rgba(0, 0, 255, 0.7)'
+            strokeColor: 'rgba(255, 0, 0, 0.7)'
         }
     });
     // Add the polyline to the map
@@ -575,7 +518,7 @@ function addRouteShapeToMapAlt32(route){
     polyline = new H.map.Polyline(strip, {
         style: {
             lineWidth: 4,
-            strokeColor: 'rgba(255, 0, 0, 0.7)'
+            strokeColor: 'rgba(0, 0, 255, 0.7)'
         }
     });
     // Add the polyline to the map
