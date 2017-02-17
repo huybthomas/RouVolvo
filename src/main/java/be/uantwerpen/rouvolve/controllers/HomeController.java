@@ -23,7 +23,7 @@ public class HomeController extends GlobalModelController
     //@PreAuthorize("hasRole('logon')")
     public String showHomepage(ModelMap model)
     {
-        return "protected/homepage";
+        return "public/routing";
     }
 
     @RequestMapping(value = {"/about"})
