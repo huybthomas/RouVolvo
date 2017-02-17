@@ -143,6 +143,10 @@ var defaultLayers = platform.createDefaultLayers();
 //Step 2: initialize a map  - not specificing a location will give a whole world view.
 var map = new H.Map(document.getElementById('map'),
     defaultLayers.normal.map);
+map.setBaseLayer(defaultLayers.normal.traffic);
+
+// Enable traffic incidents layer
+map.addLayer(defaultLayers.incidents);
 
 window.addEventListener('resize', function () {
     map.getViewPort().resize();
@@ -339,6 +343,20 @@ $(document).keypress(function(e){
     var checkEnter=(e.which==13 ? 1 : 0);
 
     if (checkEnter){
+        // Create a style object:
+        var customStyle = {
+            strokeColor: 'red',
+            fillColor: 'rgba(255, 0, 0, 0.25',
+            lineWidth: 2,
+            lineCap: 'square',
+            lineJoin: 'bevel'
+        };
+
+        // Create a rectangle and pass the custom style as an options parameter:
+        var circle = new H.map.Circle({lat: 50.929181, lng: 3.994925}, 8000,
+                { style: customStyle });
+
+        map.addObject(circle);
 
     }
 });
