@@ -447,7 +447,7 @@ function addRouteShapeToMapAlt01(route){
     polyline = new H.map.Polyline(strip, {
         style: {
             lineWidth: 4,
-            strokeColor: 'rgba(0, 128, 255, 0.7)'
+            strokeColor: 'rgba(0, 128, 255, 0.7)',
         }
     });
     // Add the polyline to the map
@@ -478,6 +478,7 @@ function addRouteShapeToMapAlt10(route){
     //map.addObject(polyline);
     option1.push(polyline);
     markers.push(polyline);
+    movingCarLine = polyline;
     // And zoom to its bounding rectangle
     map.setViewBounds(polyline.getBounds(), true);
 }
@@ -1323,16 +1324,68 @@ function updateRoute(i){
     }
 }
 
+var movingTruckMarker;
+var movingCarLine;
+
+var icon = new H.map.Icon('images/truck.png');
+
+function addMovingTruck(){
+    if(movingCarLine != null) {
+        movingTruckMarker = new H.map.Marker({lat: 51.3309891, lng: 3.2069864}, {icon: icon});
+        map.addObject(movingTruckMarker);
+        updateMovingTruck();
+    }else{
+        setTimeout(addMovingTruck, 100);
+    }
+
+}
+addMovingTruck();
+
+var counter = 0;
+function updateMovingTruck(){
+    var nextPosition = {lat:movingCarLine.cc.Pa[counter], lng:movingCarLine.cc.Pa[counter+1]};
+    counter += 3;
+    movingTruckMarker.setPosition(nextPosition);
+    setTimeout(updateMovingTruck, 100);
+}
+
 var trucks = [];
+var truckMarkers = [];
 
 function updateTrucks() {
     $.getJSON("/update", function(result){
         trucks = result;
     });
-    setTimeout(updateTrucks, 5000);
+    displayTrucks();
+    setTimeout(updateTrucks, 120000);
+}
+
+function displayTrucks() {
+    if (trucks != null){
+        map.removeObjects(truckMarkers);
+        truckMarkers = [];
+
+        for (var i = 0; i < trucks.length; i++) {
+            // Create a marker using the previously instantiated icon:
+            if (trucks[i].position != null) {
+                var marker = new H.map.Marker({
+                    lat: trucks[i].position.latitude,
+                    lng: trucks[i].position.longitude
+                }, {icon: icon});
+
+                // Add the marker to the map:
+                map.addObject(marker);
+                truckMarkers.push(marker);
+            }
+        }
+    }else{
+        setTimeout(displayTrucks, 100);
+    }
+
+
+
 }
 
 updateTrucks();
 
 start();
-

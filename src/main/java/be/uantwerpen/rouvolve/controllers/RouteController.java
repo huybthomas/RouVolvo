@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Thomas on 18/02/2017.
@@ -22,18 +23,10 @@ public class RouteController
     public List<Truck> getTrucks()
     {
         List<Truck> trucks = dynafleetService.getTrucks();
+        Map<String, Position> newPositions = dynafleetService.getNewPositions();
         for(Truck t: trucks)
         {
-            List<Position> positions = dynafleetService.getLocations(t, 1);
-            t.position = positions.get(0);
-
-            try
-            {
-                Thread.sleep(2000);}
-                catch(Exception e)
-                {
-
-                }
+            t.position = newPositions.get(t.id);
         }
         return trucks;
     }
