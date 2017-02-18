@@ -430,7 +430,6 @@ function addRouteShapeToMapAlt01(route){
     // Add the polyline to the map
     map.addObject(polyline);
     original.push(polyline);
-    movingCarLine2 = polyline;
     markers.push(polyline);
     // And zoom to its bounding rectangle
     map.setViewBounds(polyline.getBounds(), true);
@@ -456,7 +455,6 @@ function addRouteShapeToMapAlt10(route){
     //map.addObject(polyline);
     option1.push(polyline);
     markers.push(polyline);
-    movingCarLine = polyline;
     // And zoom to its bounding rectangle
     map.setViewBounds(polyline.getBounds(), true);
 }
@@ -481,6 +479,7 @@ function addRouteShapeToMapAlt11(route){
     //map.addObject(polyline);
     option1.push(polyline);
     markers.push(polyline);
+
     // And zoom to its bounding rectangle
     map.setViewBounds(polyline.getBounds(), true);
 }
@@ -505,6 +504,7 @@ function addRouteShapeToMapAlt20(route){
     //map.addObject(polyline);
     option2.push(polyline);
     markers.push(polyline);
+    movingCarLine2 = polyline;
     // And zoom to its bounding rectangle
     map.setViewBounds(polyline.getBounds(), true);
 }
@@ -529,6 +529,7 @@ function addRouteShapeToMapAlt21(route){
     //map.addObject(polyline);
     option2.push(polyline);
     markers.push(polyline);
+    movingCarLine = polyline;
     // And zoom to its bounding rectangle
     map.setViewBounds(polyline.getBounds(), true);
 }
@@ -1328,7 +1329,7 @@ function updateMovingTruck(){
     var nextPosition = {lat:movingCarLine.cc.Pa[counter], lng:movingCarLine.cc.Pa[counter+1]};
     counter += 3;
     movingTruckMarker.setPosition(nextPosition);
-    setTimeout(updateMovingTruck, 250);
+    setTimeout(updateMovingTruck, 200);
 }
 
 var movingTruckMarker2;
@@ -1354,7 +1355,7 @@ function updateMovingTruck2(){
     var nextPosition = {lat:movingCarLine2.cc.Pa[counter], lng:movingCarLine2.cc.Pa[counter+1]};
     counter += 3;
     movingTruckMarker2.setPosition(nextPosition);
-    setTimeout(updateMovingTruck2, 250);
+    setTimeout(updateMovingTruck2, 200);
 }
 
 var trucks = [];
