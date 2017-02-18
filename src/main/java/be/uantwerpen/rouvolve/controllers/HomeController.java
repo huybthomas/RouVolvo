@@ -1,5 +1,6 @@
 package be.uantwerpen.rouvolve.controllers;
 
+import be.uantwerpen.rouvolve.models.Position;
 import be.uantwerpen.rouvolve.models.entities.Truck;
 import be.uantwerpen.rouvolve.services.dynafleet.DynafleetService;
 import be.uantwerpen.rouvolve.tools.DevelopersList;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,5 +57,16 @@ public class HomeController extends GlobalModelController
         }
 
         return "public/about";
+    }
+
+    @RequestMapping("/update")
+    public List<Truck> returnSimBot()
+    {
+        List<Truck> trucks = dynafleetService.getTrucks();
+        for(Truck t: trucks){
+            List<Position> positions = dynafleetService.getLocations(t, 1);
+            t.position = positions.get(0);
+        }
+        return trucks;
     }
 }

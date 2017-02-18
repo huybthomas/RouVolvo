@@ -18,10 +18,22 @@
 <div style="width: 100%; height: 700px" id="map"></div>
 
 <div id="wrapper">
-    <div id="div1">The two divs are</div>
-    <div id="div2">next to each other.</div>
-    <div id="div3">next to each other.</div>
+    <div id="div1" style="visibility: hidden">€500 extra cost<br/>
+        Truck one redirected around traffic jam in Brussels
+    </div>
+    <div id="div2" style="visibility: hidden">€268 extra cost<br/>
+    Truck one sent immediately home (because of driver times), second truck redirected after inital delivery to compensate for truck one's delay
+    </div>
+    <div id="div3" style="visibility: hidden">€309 extra cost<br/>
+    Truck one sent home after first delivery. A third truck is dispatched to get the package not done by truck one.
+    </div>
 </div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var testAttr=/*[[${runningTest}]]*/;
+    /*]]>*/
+</script>
 
 <script th:src="'/js/HereTest.js'" type="text/javascript" charset="utf-8"></script>
 

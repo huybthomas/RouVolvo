@@ -35,6 +35,7 @@ var platform = new H.service.Platform({
     useHTTPS: true
 });
 
+var original = [];
 var option1 = [];
 var option2 = [];
 var option3 = [];
@@ -61,7 +62,7 @@ function calculateRoute01 (platform) {
 
     router.calculateRoute(
         routeRequestParams,
-        onSuccess,
+        onSuccess00,
         onError
     );
 }
@@ -81,7 +82,7 @@ function calculateRoute02 (platform) {
 
     router.calculateRoute(
         routeRequestParams,
-        onSuccess,
+        onSuccess01,
         onError
     );
 }
@@ -106,6 +107,27 @@ function calculateRoute10 (platform) {
     router.calculateRoute(
         routeRequestParams,
         onSuccessAlt10,
+        onError
+    );
+}
+
+function calculateRoute11 (platform) {
+    var router = platform.getRoutingService(),
+        routeRequestParams = {
+            mode: 'fastest;truck',
+            representation: 'display',
+            routeattributes : 'waypoints,summary,shape,legs',
+            maneuverattributes: 'direction,action',
+            waypoint0: positions[2].lat.toString() + ',' + positions[2].lng.toString(), // Brandenburg Gate
+            waypoint1: positions[3].lat.toString() + ',' + positions[3].lng.toString(), // Friedrichstraße Railway Station
+            waypoint2: positions[2].lat.toString() + ',' + positions[2].lng.toString()
+
+        };
+
+
+    router.calculateRoute(
+        routeRequestParams,
+        onSuccessAlt11,
         onError
     );
 }
@@ -214,15 +236,28 @@ function calculateRoute32 (platform) {
     );
 }
 
-function onSuccess(result) {
+function onSuccess00(result) {
     var route = result.response.route[0];
     /*
      * The styling of the route response on the map is entirely under the developer's control.
      * A representitive styling can be found the full JS + HTML code of this example
      * in the functions below:
      */
-    addRouteShapeToMap(route);
-    addManueversToMap(route);
+    addRouteShapeToMapAlt00(route);
+    addManueversToMapAlt00(route);
+
+    // ... etc.
+}
+
+function onSuccess01(result) {
+    var route = result.response.route[0];
+    /*
+     * The styling of the route response on the map is entirely under the developer's control.
+     * A representitive styling can be found the full JS + HTML code of this example
+     * in the functions below:
+     */
+    addRouteShapeToMapAlt01(route);
+    addManueversToMapAlt01(route);
 
     // ... etc.
 }
@@ -236,6 +271,19 @@ function onSuccessAlt10(result) {
      */
     addRouteShapeToMapAlt10(route);
     addManueversToMapAlt10(route);
+
+    // ... etc.
+}
+
+function onSuccessAlt11(result) {
+    var route = result.response.route[0];
+    /*
+     * The styling of the route response on the map is entirely under the developer's control.
+     * A representitive styling can be found the full JS + HTML code of this example
+     * in the functions below:
+     */
+    addRouteShapeToMapAlt11(route);
+    addManueversToMapAlt11(route);
 
     // ... etc.
 }
@@ -287,7 +335,7 @@ function onSuccessAlt31(result) {
      * in the functions below:
      */
     addRouteShapeToMapAlt31(route);
-    addManueversToMap31(route);
+    addManueversToMapAlt31(route);
 
     // ... etc.
 }
@@ -300,7 +348,7 @@ function onSuccessAlt32(result) {
      * in the functions below:
      */
     addRouteShapeToMapAlt32(route);
-    addManueversToMap32(route);
+    addManueversToMapAlt32(route);
 
     // ... etc.
 }
@@ -362,7 +410,7 @@ function openBubble(position, text){
  * Creates a H.map.Polyline from the shape of the route and adds it to the map.
  * @param {Object} route A route as received from the H.service.RoutingService
  */
-function addRouteShapeToMap(route){
+function addRouteShapeToMapAlt00(route){
     var strip = new H.geo.Strip(),
         routeShape = route.shape,
         polyline;
@@ -380,12 +428,61 @@ function addRouteShapeToMap(route){
     });
     // Add the polyline to the map
     map.addObject(polyline);
+    original.push(polyline);
+    markers.push(polyline);
+    // And zoom to its bounding rectangle
+    map.setViewBounds(polyline.getBounds(), true);
+}
+
+function addRouteShapeToMapAlt01(route){
+    var strip = new H.geo.Strip(),
+        routeShape = route.shape,
+        polyline;
+
+    routeShape.forEach(function(point) {
+        var parts = point.split(',');
+        strip.pushLatLngAlt(parts[0], parts[1]);
+    });
+
+    polyline = new H.map.Polyline(strip, {
+        style: {
+            lineWidth: 4,
+            strokeColor: 'rgba(0, 128, 255, 0.7)'
+        }
+    });
+    // Add the polyline to the map
+    map.addObject(polyline);
+    original.push(polyline);
     markers.push(polyline);
     // And zoom to its bounding rectangle
     map.setViewBounds(polyline.getBounds(), true);
 }
 
 function addRouteShapeToMapAlt10(route){
+    var strip = new H.geo.Strip(),
+        routeShape = route.shape,
+        polyline;
+
+    routeShape.forEach(function(point) {
+        var parts = point.split(',');
+        strip.pushLatLngAlt(parts[0], parts[1]);
+    });
+
+    polyline = new H.map.Polyline(strip, {
+        style: {
+            lineWidth: 4,
+            strokeColor: 'rgba(255, 0, 0, 0.7)'
+        }
+    });
+    // Add the polyline to the map
+    //map.addObject(polyline);
+    option1.push(polyline);
+    markers.push(polyline);
+    // And zoom to its bounding rectangle
+    map.setViewBounds(polyline.getBounds(), true);
+}
+
+function addRouteShapeToMapAlt11(route){
     var strip = new H.geo.Strip(),
         routeShape = route.shape,
         polyline;
@@ -533,7 +630,7 @@ function addRouteShapeToMapAlt32(route){
  * Creates a series of H.map.Marker points from the route and adds them to the map.
  * @param {Object} route  A route as received from the H.service.RoutingService
  */
-function addManueversToMap(route){
+function addManueversToMapAlt00(route){
     var svgMarkup = '<svg width="18" height="18" ' +
             'xmlns="http://www.w3.org/2000/svg">' +
             '<circle cx="8" cy="8" r="8" ' +
@@ -567,6 +664,45 @@ function addManueversToMap(route){
 
     // Add the maneuvers group to the map
     map.addObject(group);
+    original.push(group);
+    markers.push(group);
+}
+
+function addManueversToMapAlt01(route){
+    var svgMarkup = '<svg width="18" height="18" ' +
+            'xmlns="http://www.w3.org/2000/svg">' +
+            '<circle cx="8" cy="8" r="8" ' +
+            'fill="#1b468d" stroke="white" stroke-width="1"  />' +
+            '</svg>',
+        dotIcon = new H.map.Icon(svgMarkup, {anchor: {x:8, y:8}}),
+        group = new  H.map.Group(),
+        i,
+        j;
+
+    // Add a marker for each maneuver
+    for (i = 0;  i < route.leg.length; i += 1) {
+        for (j = 0;  j < route.leg[i].maneuver.length; j += 1) {
+            // Get the next maneuver.
+            maneuver = route.leg[i].maneuver[j];
+            // Add a marker to the maneuvers group
+            var marker =  new H.map.Marker({
+                    lat: maneuver.position.latitude,
+                    lng: maneuver.position.longitude} ,
+                {icon: dotIcon});
+            marker.instruction = maneuver.instruction;
+            group.addObject(marker);
+        }
+    }
+
+    group.addEventListener('tap', function (evt) {
+        map.setCenter(evt.target.getPosition());
+        openBubble(
+            evt.target.getPosition(), evt.target.instruction);
+    }, false);
+
+    // Add the maneuvers group to the map
+    map.addObject(group);
+    original.push(group);
     markers.push(group);
 }
 
@@ -938,10 +1074,14 @@ $(document).keypress(function(e){
         };
 
         // Create a rectangle and pass the custom style as an options parameter:
-        var circle = new H.map.Circle({lat: 50.929181, lng: 3.994925}, 8000,
+        var circle = new H.map.Circle({lat: 50.915598, lng: 4.377602}, 8000,
                 { style: customStyle });
 
         map.addObject(circle);
+
+        div1.style.visibility = 'visible';
+        div2.style.visibility = 'visible';
+        div3.style.visibility = 'visible';
     }
 });
 
@@ -1098,6 +1238,8 @@ var onResult5 = function(result) {
     calculateRoute30(platform);
     calculateRoute31(platform);
     calculateRoute32(platform);
+
+    map.addObjects(original);
 };
 
 var div1 = document.getElementById('div1');
@@ -1115,27 +1257,82 @@ div3.addEventListener("mouseleave", div3MouseLeave);
 
 function div1MouseOver(){
     map.addObjects(option1);
+    map.removeObjects(original);
 }
 
 function div1MouseLeave(){
     map.removeObjects(option1);
+    map.addObjects(original);
 }
 
 function div2MouseOver(){
     map.addObjects(option2);
+    map.removeObjects(original);
 }
 
 function div2MouseLeave(){
     map.removeObjects(option2);
+    map.addObjects(original);
 }
 
 function div3MouseOver(){
     map.addObjects(option3);
+    map.removeObjects(original);
 }
 
 function div3MouseLeave(){
     map.removeObjects(option3);
+    map.addObjects(original);
 }
+
+div1.onclick = function () {
+    updateRoute(1);
+};
+div2.onclick = function () {
+    updateRoute(2);
+};
+div3.onclick = function () {
+    updateRoute(3);
+};
+
+function updateRoute(i){
+    div1.style.visibility = 'hidden';
+    div2.style.visibility = 'hidden';
+    div3.style.visibility = 'hidden';
+
+    window.alert("Update Sent")
+
+    switch(i){
+        case 1:{
+            original = [];
+            original = option1.slice();
+            option1=[];
+            break;}
+        case 2:{
+            original = [];
+            original = option2.slice();
+            option2=[];
+            break;}
+        case 3:{
+            original = [];
+            original = option2.slice();
+            option3=[];
+            break;}
+        default:
+            break;
+    }
+}
+
+var trucks = [];
+
+function updateTrucks() {
+    $.getJSON("/update", function(result){
+        trucks = result;
+    });
+    setTimeout(updateTrucks, 5000);
+}
+
+updateTrucks();
 
 start();
 
