@@ -245,6 +245,100 @@ public class DynafleetService extends WebServiceGatewaySupport
         return newPositions;
     }
 
+    public Map<String, Position> getLastPositions()
+    {
+        Map<String, Position> lastPositions = new HashMap<String, Position>();
+        String response = sendSOAP(getLastPositionsSOAP(), this.dynafleetTrackingAPI, "GET");
+
+        //Parse response
+        try
+        {
+            InputSource source = new InputSource();
+            source.setCharacterStream(new StringReader(response));
+
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document document = documentBuilder.parse(source);
+
+            document.getDocumentElement().normalize();
+
+            NodeList nodeList = document.getElementsByTagName("lastKnownPositions").item(0).getChildNodes();
+
+            for(int i = 0; i < nodeList.getLength(); i++)
+            {
+                Node node = nodeList.item(i);
+
+                if(node.getNodeType() == Node.ELEMENT_NODE)
+                {
+                    Position position = new Position();
+                    String vehicleId = "";
+
+                    try
+                    {
+                        //Get latitude
+                        position.latitude = Float.parseFloat(((Element) node).getElementsByTagName("latitude").item(0).getLastChild().getFirstChild().getNodeValue());
+                    }
+                    catch(Exception e)
+                    {
+                        //Latitude not available
+                    }
+
+                    try
+                    {
+                        //Get longitude
+                        position.longitude = Float.parseFloat(((Element) node).getElementsByTagName("longitude").item(0).getLastChild().getFirstChild().getNodeValue());
+                    }
+                    catch(Exception e)
+                    {
+                        //Longitude not available
+                    }
+
+                    try
+                    {
+                        //Get time
+                        position.time = ((Element) node).getElementsByTagName("positionDateTime").item(0).getLastChild().getFirstChild().getNodeValue();
+                    }
+                    catch(Exception e)
+                    {
+                        //Time not available
+                    }
+
+                    try
+                    {
+                        //Get altitude
+                        position.altitude = Float.parseFloat(((Element) node).getElementsByTagName("altitude").item(0).getLastChild().getFirstChild().getNodeValue());
+                    }
+                    catch(Exception e)
+                    {
+                        //Altitude not available
+                    }
+
+                    try
+                    {
+                        //Get heading
+                        position.heading = Float.parseFloat(((Element) node).getElementsByTagName("heading").item(0).getLastChild().getFirstChild().getNodeValue());
+                    }
+                    catch(Exception e)
+                    {
+                        //Heading not available
+                    }
+
+                    //Get vehicle ID
+                    vehicleId = ((Element)node).getElementsByTagName("vehicleId").item(0).getLastChild().getFirstChild().getNodeValue();
+
+                    lastPositions.put(vehicleId, position);
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            Terminal.printTerminalError("Could not retrieve new positions list from server! " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return lastPositions;
+    }
+
     public List<Truck> getTrucks()
     {
         List<Truck> trucks = new ArrayList<Truck>();
@@ -403,6 +497,17 @@ System.out.println(output);
     {
         String getStart = "<typ:getNewPositions><Api_SessionId_1>";
         String getEnd = "</Api_SessionId_1></typ:getNewPositions>";
+
+        //Add id
+        String idString = "<id>" + getLoginID() + "</id>";
+
+        return getStart + idString + getEnd;
+    }
+
+    public String getLastPositionsSOAP()
+    {
+        String getStart = "<typ:getLastKnownPositions><Api_SessionId_1>";
+        String getEnd = "</Api_SessionId_1></typ:getLastKnownPositions>";
 
         //Add id
         String idString = "<id>" + getLoginID() + "</id>";

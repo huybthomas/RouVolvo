@@ -23,10 +23,10 @@ public class RouteController
     public List<Truck> getTrucks()
     {
         List<Truck> trucks = dynafleetService.getTrucks();
-        Map<String, Position> newPositions = dynafleetService.getNewPositions();
+        Map<String, Position> positions = dynafleetService.getLastPositions();
         for(Truck t: trucks)
         {
-            t.position = newPositions.get(t.id);
+            t.position = positions.get(t.id);
         }
         return trucks;
     }
