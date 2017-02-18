@@ -18,7 +18,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Thomas on 17/02/2017.
@@ -191,6 +193,58 @@ public class DynafleetService extends WebServiceGatewaySupport
         return positions;
     }
 
+    public Map<String, Position> getNewPositions()
+    {
+        Map<String, Position> newPositions = new HashMap<String, Position>();
+        String response = sendSOAP(getNewPositionsSOAP(), this.dynafleetTrackingAPI, "GET");
+
+        //Parse response
+        try
+        {
+            InputSource source = new InputSource();
+            source.setCharacterStream(new StringReader(response));
+
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document document = documentBuilder.parse(source);
+
+            document.getDocumentElement().normalize();
+
+            NodeList nodeList = document.getElementsByTagName("result").item(0).getChildNodes();
+
+            for(int i = 0; i < nodeList.getLength(); i++)
+            {
+                Node node = nodeList.item(i);
+
+                if(node.getNodeType() == Node.ELEMENT_NODE)
+                {
+                    Position position = new Position();
+                    String vehicleId = "";
+
+                    //Get latitude
+                    position.latitude = Float.parseFloat(((Element)node).getElementsByTagName("latitude").item(0).getLastChild().getFirstChild().getNodeValue());
+
+                    //Get longitude
+                    position.longitude = Float.parseFloat(((Element)node).getElementsByTagName("longitude").item(0).getLastChild().getFirstChild().getNodeValue());
+
+                    //Get time
+                    position.time = ((Element)node).getElementsByTagName("positionTime").item(0).getLastChild().getFirstChild().getNodeValue();
+
+                    //Get vehicle ID
+                    vehicleId = ((Element)node).getElementsByTagName("vehicleInformationId").item(0).getLastChild().getFirstChild().getNodeValue();
+
+                    newPositions.put(vehicleId, position);
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            Terminal.printTerminalError("Could not retrieve new positions list from server! " + e.getMessage());
+        }
+
+        return newPositions;
+    }
+
     public List<Truck> getTrucks()
     {
         List<Truck> trucks = new ArrayList<Truck>();
@@ -267,7 +321,7 @@ public class DynafleetService extends WebServiceGatewaySupport
         try
         {
             String output = encapsulatedSOAP(message);
-
+System.out.println(output);
             URL url = new URL(sendURL);
             URLConnection connection = url.openConnection();
             httpConn = (HttpURLConnection)connection;
@@ -304,7 +358,7 @@ public class DynafleetService extends WebServiceGatewaySupport
         }
         catch(Exception e)
         {
-            System.err.println("Test: " + e);
+            System.err.println("Error sending SOAP request: " + e);
             e.printStackTrace();
         }
 
@@ -343,6 +397,17 @@ public class DynafleetService extends WebServiceGatewaySupport
         String vehicleString = "<vehicleId><id>" + truck.id + "</id></vehicleId>";
 
         return getStart + locationsString + idString + vehicleString + getEnd;
+    }
+
+    public String getNewPositionsSOAP()
+    {
+        String getStart = "<typ:getNewPositions><Api_SessionId_1>";
+        String getEnd = "</Api_SessionId_1></typ:getNewPositions>";
+
+        //Add id
+        String idString = "<id>" + getLoginID() + "</id>";
+
+        return getStart + idString + getEnd;
     }
 
     public String getVehiclesSOAP()
