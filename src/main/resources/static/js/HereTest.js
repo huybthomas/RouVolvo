@@ -383,29 +383,6 @@ var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
 // Create the default UI components
 var ui = H.ui.UI.createDefault(map, defaultLayers);
 
-
-// Hold a reference to any infobubble opened
-var bubble;
-
-/**
- * Opens/Closes a infobubble
- * @param  {H.geo.Point} position     The location on the map.
- * @param  {String} text              The contents of the infobubble.
- */
-function openBubble(position, text){
-    if(!bubble){
-        bubble =  new H.ui.InfoBubble(
-            position,
-            // The FO property holds the province name.
-            {content: text});
-        ui.addBubble(bubble);
-    } else {
-        bubble.setPosition(position);
-        bubble.setContent(text);
-        bubble.open();
-    }
-}
-
 /**
  * Creates a H.map.Polyline from the shape of the route and adds it to the map.
  * @param {Object} route A route as received from the H.service.RoutingService
@@ -1380,7 +1357,7 @@ function updateMovingTruck2(){
     setTimeout(updateMovingTruck2, 250);
 }
 
-var trucks = null;
+var trucks = [];
 var truckMarkers = [];
 
 function updateTrucks() {
@@ -1391,8 +1368,10 @@ function updateTrucks() {
     setTimeout(updateTrucks, 10000);
 }
 
+//var truckGroup = new H.map.Group();
+
 function displayTrucks() {
-    if (trucks != null){
+    if (trucks.length != 0) {
         map.removeObjects(truckMarkers);
         truckMarkers = [];
 
@@ -1406,16 +1385,39 @@ function displayTrucks() {
 
                 // Add the marker to the map:
                 map.addObject(marker);
+                marker.setData("<div><p>Name: " + trucks[i].name +"</p>ID: " + trucks[i].id + "</div>");
                 truckMarkers.push(marker);
+                //truckGroup.addObject(marker);
             }
         }
-    }else{
+
+    } else {
         setTimeout(displayTrucks, 100);
     }
-
-
-
 }
+
+
+/**
+ * Add two markers showing the position of Liverpool and Manchester City football clubs.
+ * Clicking on a marker opens an infobubble which holds HTML content related to the marker.
+ * @param  {H.Map} map      A HERE Map instance within the application
+ */
+/*
+function addInfoBubble(map) {
+    // add 'tap' event listener, that opens info bubble, to the group
+    truckGroup.addEventListener('tap', function (evt) {
+        // event target is the marker itself, group is a parent event target
+        // for all objects that it contains
+        var bubble = new H.ui.InfoBubble(evt.target.getPosition(), {
+            // read custom data
+            content: evt.target.getData()
+        });
+        // show info bubble
+        ui.addBubble(bubble);
+    }, false);
+}*/
+
+//addInfoBubble(map);
 
 updateTrucks();
 
