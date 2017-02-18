@@ -48,6 +48,7 @@
                 <ul class="nav navbar-nav navbar-left">
                     <li sec:authorize="!hasRole('logon')"><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span><span> </span><span th:text="#{navbar.login}">Login</span></a></li>
                     <li sec:authorize="hasRole('logon')"><a th:href="@{/}"><span class="glyphicon glyphicon-home"></span><span> </span><span th:text="#{navbar.home}">Home</span></a></li>
+                    <li><a th:href="@{/trucks}"><span class="glyphicon glyphicon-road"></span><span> </span><span th:text="#{navbar.trucks}">Trucks</span><span> </span><span class="badge" th:text="${numOfTrucks}">#VALUE</span></a></li>
                 </ul>
                 <!-- Right buttons -->
                 <ul class="nav navbar-nav navbar-right" style="padding-right: 15px">

@@ -8,6 +8,7 @@
     background-color: rgba(255,0,0,0.2);
     border: 3px solid #ff0000;
     font-weight: bold;
+    border-radius: 10px;
 }
 #div2 {
     display: inline-flex;
@@ -16,6 +17,7 @@
     background-color: rgba(0,255,0,0.2);
     border: 3px solid #00ff00;
     font-weight: bold;
+    border-radius: 10px;
 }
 #div3 {
     display: inline-flex;
@@ -24,4 +26,5 @@
     background-color: rgba(0,0,255,0.2);
     border: 3px solid #0000ff;
     font-weight: bold;
+    border-radius: 10px;
 }

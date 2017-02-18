@@ -17,15 +17,43 @@
 
 <div style="width: 100%; height: 700px" id="map"></div>
 
+<div style="position: relative">
+    <img alt="Dynafleet" th:src="@{/images/dynafleet.png}" style="position: absolute; bottom: 8px; right: 5px; width: 8%; height-max: 100px"/>
+</div>
+
 <div id="wrapper">
-    <div id="div1" style="visibility: hidden">€500 extra cost<br/>
-        Truck one redirected around traffic jam in Brussels
+    <div id="div1" style="visibility: hidden">
+        <span style="position:relative; max-width:75%; padding-left: 5px; top: 5%">
+            <p style="font-weight: bold; font-size: 18px">Alternative 1</p>
+            &#x2714; Truck 1 queues in traffic<br/>
+            &#x2714; Delay at destination<br/>
+            &#x2714; Exceeds driving hours<br/>
+        </span>
+        <span style="position:relative; top:30%; left: 7%; font-size:18px; padding: 12px; border-radius: 15px; border: 3px solid red; height: 55px">
+            + €500
+        </span>
     </div>
-    <div id="div2" style="visibility: hidden">€268 extra cost<br/>
-    Truck one sent immediately home (because of driver times), second truck redirected after inital delivery to compensate for truck one's delay
+    <div id="div2" style="visibility: hidden">
+        <span style="position:relative; max-width:75%; padding-left: 5px; top: 5%">
+            <p style="font-weight: bold; font-size: 18px">Alternative 2</p>
+            &#x2714; Truck 1 re-route via Antwerp<br/>
+            &#x2714; Delay at destination<br/>
+            &#x2714; Truck 2 handles task 2<br/>
+        </span>
+        <span style="position:relative; top:30%; left: 7%; font-size:18px; padding: 12px; border-radius: 15px; border: 3px solid #00ff00; height: 55px">
+            + €268
+        </span>
     </div>
-    <div id="div3" style="visibility: hidden">€309 extra cost<br/>
-    Truck one sent home after first delivery. A third truck is dispatched to get the package not done by truck one.
+    <div id="div3" style="visibility: hidden">
+        <span style="position:relative; max-width:75%; padding-left: 5px; top: 5%">
+            <p style="font-weight:bold; font-size: 18px">Alternative 3</p>
+            &#x2714; Truck 1 re-route via Antwerp<br/>
+            &#x2714; Delay at destination<br/>
+            &#x2714; Truck 3 handles task 2<br/>
+        </span>
+        <div style="position:relative; top:30%; left: 7%; font-size:18px; padding: 12px; border-radius: 15px; border: 3px solid blue; height: 55px">
+            + €309
+        </div>
     </div>
 </div>
 

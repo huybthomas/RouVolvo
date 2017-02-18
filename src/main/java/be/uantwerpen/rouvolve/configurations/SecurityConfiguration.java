@@ -23,7 +23,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
     protected void configure(HttpSecurity http) throws Exception
     {
         //Permit access to H2 console --Development only (Order of defining is important!)
-        http.authorizeRequests().antMatchers("/h2console/**", "/", "/update")
+        http.authorizeRequests().antMatchers("/h2console/**", "/", "/update", "/trucks")
                 .permitAll();
 
         http.authorizeRequests().antMatchers("/webjars/**")

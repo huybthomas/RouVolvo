@@ -14,7 +14,7 @@ import java.util.Map;
  * Created by Thomas on 18/02/2017.
  */
 @RestController
-public class RouteController
+public class RouteController extends GlobalModelController
 {
     @Autowired
     DynafleetService dynafleetService;
