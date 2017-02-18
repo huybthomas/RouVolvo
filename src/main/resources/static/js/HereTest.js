@@ -453,6 +453,7 @@ function addRouteShapeToMapAlt01(route){
     // Add the polyline to the map
     map.addObject(polyline);
     original.push(polyline);
+    movingCarLine2 = polyline;
     markers.push(polyline);
     // And zoom to its bounding rectangle
     map.setViewBounds(polyline.getBounds(), true);
@@ -1343,21 +1344,50 @@ addMovingTruck();
 
 var counter = 0;
 function updateMovingTruck(){
+    if(counter+3 >= movingCarLine.cc.Pa.length){
+        counter = 0;
+    }
     var nextPosition = {lat:movingCarLine.cc.Pa[counter], lng:movingCarLine.cc.Pa[counter+1]};
     counter += 3;
     movingTruckMarker.setPosition(nextPosition);
-    setTimeout(updateMovingTruck, 100);
+    setTimeout(updateMovingTruck, 250);
 }
 
-var trucks = [];
+var movingTruckMarker2;
+var movingCarLine2;
+
+function addMovingTruck2(){
+    if(movingCarLine != null) {
+        movingTruckMarker2 = new H.map.Marker({lat: 51.3309891, lng: 3.2069864}, {icon: icon});
+        map.addObject(movingTruckMarker2);
+        updateMovingTruck2();
+    }else{
+        setTimeout(addMovingTruck2, 100);
+    }
+
+}
+addMovingTruck2();
+
+var counter = 0;
+function updateMovingTruck2(){
+    if(counter+3 >= movingCarLine2.cc.Pa.length){
+        counter = 0;
+    }
+    var nextPosition = {lat:movingCarLine2.cc.Pa[counter], lng:movingCarLine2.cc.Pa[counter+1]};
+    counter += 3;
+    movingTruckMarker2.setPosition(nextPosition);
+    setTimeout(updateMovingTruck2, 250);
+}
+
+var trucks = null;
 var truckMarkers = [];
 
 function updateTrucks() {
     $.getJSON("/update", function(result){
         trucks = result;
     });
-    displayTrucks();
-    setTimeout(updateTrucks, 120000);
+    setTimeout(displayTrucks, 200);
+    setTimeout(updateTrucks, 10000);
 }
 
 function displayTrucks() {
