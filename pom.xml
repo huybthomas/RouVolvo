@@ -31,6 +31,11 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.ws</groupId>
+			<artifactId>spring-ws-core</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -96,7 +101,28 @@
 					<mainClass>be.uantwerpen.rouvolve</mainClass>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.jvnet.jaxb2.maven2</groupId>
+				<artifactId>maven-jaxb2-plugin</artifactId>
+				<version>0.13.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<schemaLanguage>WSDL</schemaLanguage>
+					<generatePackage>dynafleet.wsdl</generatePackage>
+					<schemas>
+						<schema>
+							<url>https://api2.dynafleetonline.com/wsdl</url>
+						</schema>
+					</schemas>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
-
 </project>

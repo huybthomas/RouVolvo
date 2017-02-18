@@ -1,5 +1,7 @@
 package be.uantwerpen.rouvolve.controllers;
 
+import be.uantwerpen.rouvolve.models.entities.Truck;
+import be.uantwerpen.rouvolve.services.dynafleet.DynafleetService;
 import be.uantwerpen.rouvolve.tools.DevelopersList;
 import be.uantwerpen.rouvolve.tools.Terminal;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +21,23 @@ public class HomeController extends GlobalModelController
     @Autowired
     DevelopersList developersList;
 
+    @Autowired
+    DynafleetService dynafleetService;
+
     @RequestMapping(value = {"/"})
     //@PreAuthorize("hasRole('logon')")
     public String showHomepage(ModelMap model)
     {
+        //Login dynafleet service
+        if(!dynafleetService.loggedOn())
+        {
+            dynafleetService.dynafleetLogin();
+        }
+
+        List<Truck> trucks = dynafleetService.getTrucks();
+
+        dynafleetService.getLocations(trucks.get(0), 4);
+
         return "public/routing";
     }
 
