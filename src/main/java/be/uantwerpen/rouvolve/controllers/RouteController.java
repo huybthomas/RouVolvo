@@ -30,4 +30,20 @@ public class RouteController extends GlobalModelController
         }
         return trucks;
     }
+
+    @RequestMapping(value = {"/message"})
+    public void sendDirections()
+    {
+        String message = "NEW ROUTE:\nLibramont via Antwerp.\nGo RouVolvo!";
+        String vehicleId = "2000252807";
+        Truck truck = new Truck();
+        Position position = new Position();
+        truck.id = vehicleId;
+        position.latitude = 49.912496;
+        position.longitude = 5.365496;
+
+        dynafleetService.sendMessageWithDestination(message, position, truck);
+
+        return;
+    }
 }

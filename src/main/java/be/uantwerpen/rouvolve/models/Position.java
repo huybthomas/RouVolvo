@@ -5,9 +5,9 @@ package be.uantwerpen.rouvolve.models;
  */
 public class Position
 {
-    public float latitude;
-    public float longitude;
-    public float altitude;
-    public float heading;
+    public double latitude;
+    public double longitude;
+    public double altitude;
+    public double heading;
     public String time;
 }

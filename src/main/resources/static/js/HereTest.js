@@ -1280,6 +1280,8 @@ function updateRoute(i){
     div2.style.visibility = 'hidden';
     div3.style.visibility = 'hidden';
 
+    $.getJSON("/message", null, null);
+
     window.alert("Update Sent")
 
     switch(i){
