@@ -415,7 +415,6 @@ public class DynafleetService extends WebServiceGatewaySupport
         try
         {
             String output = encapsulatedSOAP(message);
-System.out.println(output);
             URL url = new URL(sendURL);
             URLConnection connection = url.openConnection();
             httpConn = (HttpURLConnection)connection;

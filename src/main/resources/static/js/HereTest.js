@@ -1329,6 +1329,7 @@ var movingTruckMarker;
 var movingCarLine;
 
 var icon = new H.map.Icon('images/truck.png');
+var icon_opac = new H.map.Icon('images/truck_opac.png');
 
 function addMovingTruck(){
     if(movingCarLine != null) {
@@ -1401,7 +1402,7 @@ function displayTrucks() {
                 var marker = new H.map.Marker({
                     lat: trucks[i].position.latitude,
                     lng: trucks[i].position.longitude
-                }, {icon: icon});
+                }, {icon: icon_opac});
 
                 // Add the marker to the map:
                 map.addObject(marker);
