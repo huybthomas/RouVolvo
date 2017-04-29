@@ -29,8 +29,8 @@ var positions = [];
 var markers = [];
 
 var platform = new H.service.Platform({
-    app_id: 'iCn0Xpw2mwICvvbA3tqu',
-    app_code: 'Rliy9NrYV2-WjR52DSbtVA',
+    app_id: 'fPOPlLg56HbPWYEOLMNk',
+    app_code: 'Qcj96WyT1gnx7tYeqO8CZg',
     useCIT: true,
     useHTTPS: true
 });
@@ -1325,10 +1325,10 @@ addMovingTruck();
 
 var counter = 0;
 function updateMovingTruck(){
-    if(counter+3 >= movingCarLine.cc.Pa.length){
+    if(counter+3 >= movingCarLine.c.b.length){
         counter = 0;
     }
-    var nextPosition = {lat:movingCarLine.cc.Pa[counter], lng:movingCarLine.cc.Pa[counter+1]};
+    var nextPosition = {lat:movingCarLine.c.b[counter], lng:movingCarLine.c.b[counter+1]};
     counter += 3;
     movingTruckMarker.setPosition(nextPosition);
     setTimeout(updateMovingTruck, 200);
@@ -1351,10 +1351,10 @@ addMovingTruck2();
 
 var counter = 0;
 function updateMovingTruck2(){
-    if(counter+3 >= movingCarLine2.cc.Pa.length){
+    if(counter+3 >= movingCarLine2.c.b.length){
         counter = 0;
     }
-    var nextPosition = {lat:movingCarLine2.cc.Pa[counter], lng:movingCarLine2.cc.Pa[counter+1]};
+    var nextPosition = {lat:movingCarLine2.c.b[counter], lng:movingCarLine2.c.b[counter+1]};
     counter += 3;
     movingTruckMarker2.setPosition(nextPosition);
     setTimeout(updateMovingTruck2, 200);

@@ -10,4 +10,18 @@ public class Position
     public double altitude;
     public double heading;
     public String time;
+
+    public Position(double latitude, double longitude, double altitude, double heading, String time)
+    {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.altitude = altitude;
+        this.heading = heading;
+        this.time = time;
+    }
+
+    public Position()
+    {
+
+    }
 }

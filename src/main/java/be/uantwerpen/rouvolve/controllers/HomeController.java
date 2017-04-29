@@ -25,18 +25,18 @@ public class HomeController extends GlobalModelController
     DynafleetService dynafleetService;
 
     @RequestMapping(value = {"/"})
-    //@PreAuthorize("hasRole('logon')")
+    @PreAuthorize("hasRole('logon')")
     public String showHomepage(ModelMap model)
     {
         //Login dynafleet service
-        if(!dynafleetService.loggedOn())
+        //if(!dynafleetService.loggedOn())
         {
-            dynafleetService.dynafleetLogin();
+            //dynafleetService.dynafleetLogin();
         }
 
-        List<Truck> trucks = dynafleetService.getTrucks();
+        //List<Truck> trucks = dynafleetService.getTrucks();
 
-        dynafleetService.getLocations(trucks.get(0), 4);
+        //dynafleetService.getLocations(trucks.get(0), 4);
 
         return "public/routing";
     }
